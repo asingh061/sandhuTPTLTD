@@ -11,6 +11,7 @@ import os
 from dotenv import load_dotenv
 from openai import OpenAI
 from fastapi.middleware.cors import CORSMiddleware
+from rag import find_best_context
 
 app = FastAPI()
 app.add_middleware(
@@ -134,23 +135,23 @@ def load_company_info():
         
 @app.post("/api/ask-ai")
 def ask_ai(request: AIQuestion):
-    company_info = load_company_info()
+    context = find_best_context(request.question)
 
     response = client.responses.create(
         model="gpt-4.1-mini",
         instructions=f"""
 You are Sandhu AI, the official assistant for Sandhu Transport Zambia.
 
-Answer only using the company information below:
+Answer the user's question using only this retrieved company information:
 
-{company_info}
+{context}
 
 Keep answers short, professional, and direct.
 
 If the user asks something unrelated, say:
 "I can only answer questions related to Sandhu Transport and the information available on our website."
 
-If the answer is not in the company information, say:
+If the answer is not in the retrieved information, say:
 "I couldn't find that information on the Sandhu Transport website. Please contact our team directly for assistance."
 """,
         input=request.question
@@ -158,7 +159,7 @@ If the answer is not in the company information, say:
 
     return {
         "question": request.question,
+        "context_used": context,
         "answer": response.output_text
     }
-
 
