@@ -2,8 +2,19 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 import json
 from pathlib import Path
+from sqlalchemy.orm import Session
+from database import SessionLocal
+from models import InquiryDB
+from schemas import InquiryCreate
 
 app = FastAPI()
+
+def get_db():
+    db = SessionLocal()
+    try:
+        return db
+    finally:
+        pass
 
 @app.get("/")
 def home():
@@ -26,27 +37,26 @@ class Inquiry(BaseModel):
     message: str
 
 @app.post("/api/inquiry")
-def receive_inquiry(inquiry: Inquiry):
-    file_path = Path("inquiries.json")
 
-    if file_path.exists():
-        with open(file_path, "r") as file:
-            inquiries = json.load(file)
-    else:
-        inquiries = []
+def receive_inquiry(inquiry: InquiryCreate):
+    db = get_db()
 
-    new_inquiry = inquiry.model_dump()
-    new_inquiry["id"] = len(inquiries) + 1
+    new_inquiry = InquiryDB(
+        name=inquiry.name,
+        email=inquiry.email,
+        phone=inquiry.phone,
+        message=inquiry.message
+    )
 
-    inquiries.append(new_inquiry)
-
-    with open(file_path, "w") as file:
-        json.dump(inquiries, file, indent=4)
+    db.add(new_inquiry)
+    db.commit()
+    db.refresh(new_inquiry)
+    db.close()
 
     return {
         "status": "success",
-        "message": "Inquiry saved successfully",
-        "data": inquiry
+        "message": "Inquiry saved to database",
+        "data": new_inquiry
     }
 
 @app.get("/api/inquiries")
@@ -92,6 +102,16 @@ def search_inquiries(name: str):
             results.append(inquiry)
 
     return results
+
+@app.get("/api/db-inquiries")
+def get_db_inquiries():
+    db = get_db()
+
+    inquiries = db.query(InquiryDB).all()
+
+    db.close()
+
+    return inquiries
         
 
 

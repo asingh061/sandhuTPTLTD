@@ -4,525 +4,526 @@
   <meta charset="UTF-8" />
   <meta http-equiv="Content-Security-Policy" content="frame-src https://www.google.com https://maps.google.com https://www.google.com/maps;">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Sandhu Transport Zambia — specialists in frozen and refrigerated freight across Southern Africa. 90+ trucks, 10 tankers, real-time GPS tracking. Based in Ndola, serving Zambia, Namibia, DRC, Mozambique and South Africa." />
+  <title>Sandhu Transport Zambia — Frozen Freight, Logistics &amp; Clearing</title>
   <link rel="icon" type="image/x-icon" href="favicon.ico" />
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
-  <title>Sandhu Transport Zambia — Freight, Logistics &amp; Clearing Services</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/tabler-icons.min.css" />
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Inter', sans-serif; color: #1a1a1a; background: #fff; line-height: 1.7; }
-
-    /* BRAND COLORS */
-    :root {
-      --navy: #0d2244;
-      --blue: #1A3A6B;
-      --gold: #C8871A;
-      --gold-light: #E8A832;
-      --white: #ffffff;
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    :root{
+      --navy:#0d2244; --navy-deep:#081830; --blue:#1A3A6B;
+      --gold:#C8871A; --gold-light:#E8A832; --paper:#f7f9fc; --line:#e0e8f0;
     }
+    html{scroll-behavior:smooth;}
+    body{font-family:'Inter',sans-serif;color:#1a1a1a;background:#fff;line-height:1.7;overflow-x:hidden;}
 
     /* NAV */
-    nav {
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 1rem 2.5rem; border-bottom: 1px solid #e0e0e0;
-      background: var(--navy); position: sticky; top: 0; z-index: 100;
-    }
-    .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
-    .nav-logo-icon {
-      width: 40px; height: 40px; background: var(--gold);
-      border-radius: 8px; display: flex; align-items: center; justify-content: center;
-    }
-    .nav-logo-icon i { color: var(--navy); font-size: 22px; }
-    .nav-logo-name { font-size: 16px; font-weight: 600; color: #fff; }
-    .nav-logo-sub { font-size: 11px; color: rgba(255,255,255,0.55); }
-    .nav-links { display: flex; gap: 1.75rem; }
-    .nav-links a { font-size: 14px; color: rgba(255,255,255,0.7); text-decoration: none; transition: color 0.15s; }
-    .nav-links a:hover { color: var(--gold-light); }
-    .nav-cta {
-      background: var(--gold); color: var(--navy); border: none;
-      padding: 9px 20px; border-radius: 8px; font-size: 14px; font-weight: 600;
-      cursor: pointer; text-decoration: none; transition: background 0.15s;
-    }
-    .nav-cta:hover { background: var(--gold-light); }
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;
+      padding:1.1rem 2.5rem;transition:background .3s,padding .3s,box-shadow .3s;background:transparent;}
+    nav.scrolled{background:rgba(13,34,68,.97);padding:.7rem 2.5rem;box-shadow:0 4px 20px rgba(0,0,0,.25);}
+    .nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
+    .nav-logo-icon{width:42px;height:42px;background:var(--gold);border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+    .nav-logo-icon i{color:var(--navy);font-size:23px;}
+    .nav-logo-name{font-size:16px;font-weight:700;color:#fff;letter-spacing:.01em;}
+    .nav-logo-sub{font-size:11px;color:rgba(255,255,255,.6);letter-spacing:.18em;text-transform:uppercase;}
+    .nav-links{display:flex;gap:1.9rem;align-items:center;}
+    .nav-links a{font-size:14px;color:rgba(255,255,255,.82);text-decoration:none;transition:color .15s;font-weight:500;}
+    .nav-links a:hover{color:var(--gold-light);}
+    .nav-cta{background:var(--gold);color:var(--navy);padding:10px 22px;border-radius:8px;font-size:14px;font-weight:600;text-decoration:none;transition:background .15s,transform .15s;}
+    .nav-cta:hover{background:var(--gold-light);transform:translateY(-1px);}
+    .nav-toggle{display:none;background:none;border:none;color:#fff;font-size:28px;cursor:pointer;}
 
     /* HERO */
-    .hero {
-      position: relative; min-height: 540px;
-      display: flex; align-items: flex-end;
-      overflow: hidden;
-    }
-    .hero-bg {
-      position: absolute; inset: 0;
-      background-image: url('fleet/fleet-scania.jpg');
-      background-size: cover; background-position: center 40%;
-    }
-    .hero-overlay {
-      position: absolute; inset: 0;
-      background: linear-gradient(90deg, rgba(10,24,55,0.95) 0%, rgba(10,24,55,0.82) 45%, rgba(10,24,55,0.55) 100%);
-    }
-    .hero-content { position: relative; z-index: 1; padding: 4rem 2.5rem 3.5rem; max-width: 600px; color: #fff; }
-    .hero-badge {
-      display: inline-flex; align-items: center; gap: 6px;
-      background: rgba(200,135,26,0.2); border: 1px solid var(--gold);
-      border-radius: 20px; padding: 5px 14px; font-size: 13px; color: var(--gold-light);
-      margin-bottom: 1.5rem;
-    }
-    .hero h1 { font-size: 40px; font-weight: 600; line-height: 1.2; margin-bottom: 1.25rem; }
-    .hero h1 span { color: var(--gold-light); }
-    .hero p { font-size: 16px; color: rgba(255,255,255,0.78); max-width: 480px; margin-bottom: 2rem; }
-    .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
-    .btn-gold {
-      background: var(--gold); color: var(--navy); border: none;
-      padding: 11px 24px; border-radius: 8px; font-size: 14px; font-weight: 600;
-      cursor: pointer; text-decoration: none; transition: background 0.15s;
-    }
-    .btn-gold:hover { background: var(--gold-light); }
-    .btn-outline-white {
-      background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.5);
-      padding: 11px 24px; border-radius: 8px; font-size: 14px;
-      cursor: pointer; text-decoration: none; transition: border-color 0.15s;
-    }
-    .btn-outline-white:hover { border-color: rgba(255,255,255,0.9); }
+    .hero{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden;}
+    .hero-bg{position:absolute;inset:0;background-image:url('fleet/scania-pair-front.jpg');background-size:cover;background-position:center;animation:slowzoom 20s ease-out forwards;}
+    @keyframes slowzoom{from{transform:scale(1);}to{transform:scale(1.12);}}
+    .hero-overlay{position:absolute;inset:0;background:linear-gradient(105deg,rgba(8,24,48,.93) 0%,rgba(8,24,48,.8) 40%,rgba(8,24,48,.45) 75%,rgba(8,24,48,.25) 100%);}
+    .hero-content{position:relative;z-index:2;padding:7rem 2.5rem 3rem;max-width:760px;color:#fff;}
+    .hero-badge{display:inline-flex;align-items:center;gap:7px;background:rgba(200,135,26,.18);border:1px solid var(--gold);border-radius:30px;padding:6px 16px;font-size:13px;color:var(--gold-light);margin-bottom:1.6rem;font-weight:500;}
+    .hero h1{font-size:clamp(34px,5.5vw,60px);font-weight:800;line-height:1.08;letter-spacing:-.02em;margin-bottom:1.4rem;}
+    .hero h1 .gold{color:var(--gold-light);}
+    .hero p{font-size:clamp(15px,2vw,18px);color:rgba(255,255,255,.8);max-width:540px;margin-bottom:2.2rem;font-weight:400;}
+    .hero-btns{display:flex;gap:14px;flex-wrap:wrap;}
+    .btn-gold{background:var(--gold);color:var(--navy);padding:13px 28px;border-radius:9px;font-size:15px;font-weight:600;text-decoration:none;transition:background .15s,transform .15s;display:inline-flex;align-items:center;gap:8px;}
+    .btn-gold:hover{background:var(--gold-light);transform:translateY(-2px);}
+    .btn-ghost{background:rgba(255,255,255,.08);backdrop-filter:blur(4px);color:#fff;padding:13px 28px;border-radius:9px;font-size:15px;font-weight:500;text-decoration:none;border:1px solid rgba(255,255,255,.4);transition:background .15s;display:inline-flex;align-items:center;gap:8px;}
+    .btn-ghost:hover{background:rgba(255,255,255,.18);}
+    .hero-scroll{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);z-index:2;color:rgba(255,255,255,.6);font-size:24px;animation:bounce 2s infinite;}
+    @keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0);}50%{transform:translateX(-50%) translateY(8px);}}
 
-    /* STATS BAR */
-    .stats-bar {
-      background: var(--navy); display: flex; justify-content: center;
-      gap: 0; border-bottom: 3px solid var(--gold);
-    }
-    .stat-item {
-      flex: 1; max-width: 200px; padding: 1.4rem 1rem;
-      text-align: center; border-right: 1px solid rgba(255,255,255,0.1);
-    }
-    .stat-item:last-child { border-right: none; }
-    .stat-num { font-size: 28px; font-weight: 600; color: var(--gold-light); }
-    .stat-label { font-size: 12px; color: rgba(255,255,255,0.6); margin-top: 2px; }
+    /* STATS */
+    .stats-bar{background:var(--navy);display:flex;justify-content:center;flex-wrap:wrap;border-bottom:3px solid var(--gold);}
+    .stat-item{flex:1;min-width:160px;max-width:260px;padding:1.7rem 1rem;text-align:center;border-right:1px solid rgba(255,255,255,.08);}
+    .stat-item:last-child{border-right:none;}
+    .stat-num{font-size:34px;font-weight:800;color:var(--gold-light);letter-spacing:-.02em;}
+    .stat-label{font-size:12.5px;color:rgba(255,255,255,.6);margin-top:3px;letter-spacing:.03em;}
 
     /* SECTIONS */
-    .section { padding: 4rem 2.5rem; }
-    .section-label {
-      font-size: 12px; color: var(--gold); font-weight: 600;
-      letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.5rem;
-    }
-    .section-title { font-size: 26px; font-weight: 600; margin-bottom: 0.6rem; color: var(--navy); }
-    .section-sub { font-size: 15px; color: #666; max-width: 500px; margin-bottom: 2.5rem; }
+    .section{padding:5.5rem 2.5rem;max-width:1240px;margin:0 auto;}
+    .section-label{font-size:12px;color:var(--gold);font-weight:700;letter-spacing:.14em;text-transform:uppercase;margin-bottom:.6rem;}
+    .section-title{font-size:clamp(26px,3.5vw,38px);font-weight:800;letter-spacing:-.02em;color:var(--navy);line-height:1.15;margin-bottom:.7rem;}
+    .gold-divider{height:3px;background:var(--gold);width:54px;margin:0 0 1.6rem;border-radius:2px;}
+    .section-sub{font-size:16px;color:#5a6577;max-width:560px;margin-bottom:2.8rem;}
+
+    /* reveal animation */
+    .reveal{opacity:0;transform:translateY(34px);transition:opacity .7s ease,transform .7s ease;}
+    .reveal.visible{opacity:1;transform:none;}
 
     /* SERVICES */
-    .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 16px; }
-    .service-card {
-      background: #fff; border: 1px solid #e8e8e8;
-      border-radius: 12px; padding: 1.4rem;
-      transition: box-shadow 0.15s, border-color 0.15s;
-    }
-    .service-card:hover { box-shadow: 0 4px 16px rgba(13,34,68,0.1); border-color: #c8d4e8; }
-    .service-icon {
-      width: 44px; height: 44px; background: transparent;
-      display: flex; align-items: center; justify-content: flex-start; margin-bottom: 0.75rem;
-    }
-    .service-icon i { font-size: 30px; color: var(--blue); }
-    .service-card h3 { font-size: 15px; font-weight: 600; margin-bottom: 6px; color: var(--navy); }
-    .service-card p { font-size: 13px; color: #666; line-height: 1.6; }
+    .services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:18px;}
+    .service-card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:1.6rem;transition:box-shadow .2s,transform .2s,border-color .2s;}
+    .service-card:hover{box-shadow:0 12px 32px rgba(13,34,68,.1);transform:translateY(-4px);border-color:#c8d4e8;}
+    .service-card.feature{border:2px solid var(--gold);background:linear-gradient(165deg,#fffdf8,#fff);}
+    .service-ic{font-size:32px;color:var(--blue);margin-bottom:.9rem;display:block;}
+    .service-card.feature .service-ic{color:var(--gold);}
+    .service-card h3{font-size:16px;font-weight:700;margin-bottom:7px;color:var(--navy);}
+    .badge{font-size:9.5px;background:var(--gold);color:#fff;padding:2px 8px;border-radius:10px;vertical-align:middle;margin-left:5px;letter-spacing:.05em;font-weight:600;}
+    .service-card p{font-size:13.5px;color:#5a6577;line-height:1.65;}
 
-    /* GOLD DIVIDER */
-    .gold-divider { height: 3px; background: var(--gold); width: 48px; margin: 0 0 1.5rem; }
+    /* ALTERNATING FEATURE BLOCKS */
+    .feature-block{display:grid;grid-template-columns:1fr 1fr;gap:0;align-items:stretch;border-radius:18px;overflow:hidden;box-shadow:0 14px 44px rgba(13,34,68,.1);margin-bottom:2rem;background:#fff;}
+    .feature-block.flip .fb-img{order:2;}
+    .fb-img{min-height:380px;background-size:cover;background-position:center;}
+    .fb-text{padding:3rem 2.8rem;display:flex;flex-direction:column;justify-content:center;}
+    .fb-text .section-label{margin-bottom:.5rem;}
+    .fb-text h3{font-size:26px;font-weight:800;color:var(--navy);letter-spacing:-.01em;margin-bottom:.8rem;line-height:1.2;}
+    .fb-text p{font-size:15px;color:#5a6577;margin-bottom:1rem;}
+    .fb-list{list-style:none;display:flex;flex-direction:column;gap:10px;}
+    .fb-list li{display:flex;gap:10px;align-items:flex-start;font-size:14.5px;color:#3a4759;}
+    .fb-list li i{color:var(--gold);font-size:18px;flex-shrink:0;margin-top:1px;}
 
-    /* WHY */
-    .why-section { background: var(--navy); }
-    .why-section .section-title { color: #fff; }
-    .why-section .section-sub { color: rgba(255,255,255,0.65); }
-    .why-section .section-label { color: var(--gold-light); }
-    .why-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
-    .why-item { display: flex; gap: 14px; align-items: flex-start; }
-    .why-icon {
-      width: 44px; height: 44px; background: var(--gold);
-      border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-    }
-    .why-icon i { color: var(--navy); font-size: 20px; }
-    .why-item h4 { font-size: 14px; font-weight: 600; margin-bottom: 4px; color: #fff; }
-    .why-item p { font-size: 13px; color: rgba(255,255,255,0.6); line-height: 1.6; }
+    /* DARK SECTION */
+    .dark-section{background:linear-gradient(160deg,var(--navy-deep),var(--navy));color:#fff;}
+    .dark-section .section-title{color:#fff;}
+    .dark-section .section-sub{color:rgba(255,255,255,.65);}
 
-    /* COVERAGE */
-    .coverage-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
-    .coverage-map {
-      background: #e8eff9; border-radius: 12px; height: 260px;
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      border: 1px solid #c8d4e8; gap: 12px;
-    }
-    .coverage-map i { font-size: 56px; color: var(--blue); }
-    .coverage-map span { font-size: 13px; color: var(--blue); font-weight: 500; }
-    .route-list { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-top: 1.25rem; }
-    .route-list li { display: flex; align-items: center; gap: 10px; font-size: 14px; color: #444; }
-    .route-list li i { color: var(--gold); font-size: 16px; flex-shrink: 0; }
+    /* TRANSPORT GRID */
+    .transport-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;}
+    .transport-item{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:1.3rem;text-align:center;transition:background .2s,transform .2s;}
+    .transport-item:hover{background:rgba(200,135,26,.14);transform:translateY(-3px);}
+    .transport-item i{font-size:30px;color:var(--gold-light);margin-bottom:.6rem;display:block;}
+    .transport-item span{font-size:14px;color:#fff;font-weight:500;}
+
+    /* WHY GRID */
+    .why-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:22px;}
+    .why-item{display:flex;gap:15px;align-items:flex-start;}
+    .why-ic{width:46px;height:46px;background:var(--gold);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+    .why-ic i{color:var(--navy);font-size:22px;}
+    .why-item h4{font-size:15px;font-weight:700;margin-bottom:5px;color:#fff;}
+    .why-item p{font-size:13.5px;color:rgba(255,255,255,.6);line-height:1.6;}
+
+    /* TRACKING */
+    .track-wrap{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center;}
+    .track-visual{background:linear-gradient(150deg,#102a52,#0d2244);border:1px solid rgba(255,255,255,.1);border-radius:18px;padding:2.5rem;position:relative;overflow:hidden;min-height:300px;display:flex;flex-direction:column;justify-content:center;}
+    .track-pulse{position:absolute;top:50%;left:50%;width:16px;height:16px;background:var(--gold-light);border-radius:50%;transform:translate(-50%,-50%);}
+    .track-pulse::before,.track-pulse::after{content:'';position:absolute;inset:0;border-radius:50%;background:var(--gold-light);animation:pulsering 2.4s ease-out infinite;}
+    .track-pulse::after{animation-delay:1.2s;}
+    @keyframes pulsering{0%{transform:scale(1);opacity:.7;}100%{transform:scale(9);opacity:0;}}
+    .track-stat{position:relative;z-index:2;text-align:center;}
+    .track-stat .big{font-size:46px;font-weight:800;color:#fff;}
+    .track-stat .lbl{font-size:14px;color:rgba(255,255,255,.6);}
+
+    /* ROUTES */
+    .routes-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;}
+    .route-card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:1.5rem;border-left:4px solid var(--gold);transition:transform .2s,box-shadow .2s;}
+    .route-card:hover{transform:translateY(-4px);box-shadow:0 12px 30px rgba(13,34,68,.1);}
+    .route-card .rc-head{display:flex;align-items:center;gap:9px;margin-bottom:9px;}
+    .route-card .rc-head i{font-size:21px;color:var(--gold);}
+    .route-card .rc-head span{font-size:16px;font-weight:700;color:var(--navy);}
+    .route-card p{font-size:13px;color:#5a6577;line-height:1.6;}
+
+    /* GALLERY */
+    .gallery-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;}
+    .gallery-item{border-radius:14px;overflow:hidden;aspect-ratio:4/3;border:1px solid var(--line);}
+    .gallery-item img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s;}
+    .gallery-item:hover img{transform:scale(1.07);}
+
+    /* MISSION/VISION */
+    .mv-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+    .mv-card{border-radius:16px;padding:2rem;}
+    .mv-card.mission{background:linear-gradient(160deg,var(--navy),var(--blue));}
+    .mv-card.vision{background:linear-gradient(160deg,var(--gold),var(--gold-light));}
+    .mv-card .mv-lbl{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.7rem;}
+    .mv-card.mission .mv-lbl{color:var(--gold-light);} .mv-card.mission p{color:rgba(255,255,255,.85);}
+    .mv-card.vision .mv-lbl{color:var(--navy);} .mv-card.vision p{color:var(--navy);}
+    .mv-card p{font-size:15px;line-height:1.7;}
+
+    /* TRUST/ACCREDITATIONS */
+    .trust-row{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;}
+    .trust-item{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:1rem 1.5rem;}
+    .trust-item i{font-size:26px;color:var(--gold);}
+    .trust-item span{font-size:14px;font-weight:600;color:var(--navy);}
 
     /* CONTACT */
-    .contact-section { background: #f7f9fc; }
-    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
-    .contact-info h3 { font-size: 20px; font-weight: 600; margin-bottom: 0.75rem; color: var(--navy); }
-    .contact-info > p { font-size: 14px; color: #666; margin-bottom: 2rem; }
-    .contact-detail { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; font-size: 14px; color: #333; }
-    .contact-detail i { color: var(--gold); font-size: 20px; flex-shrink: 0; }
-    .contact-form {
-      background: #fff; border-radius: 12px; padding: 1.75rem;
-      border: 1px solid #e0e8f0; box-shadow: 0 2px 12px rgba(13,34,68,0.06);
-    }
-    .form-row { margin-bottom: 14px; }
-    .form-row label { font-size: 12px; font-weight: 500; color: #555; display: block; margin-bottom: 5px; }
-    .form-row input, .form-row textarea, .form-row select {
-      width: 100%; font-size: 14px; font-family: 'Inter', sans-serif;
-      background: #f7f9fc; border: 1px solid #dde5ef;
-      border-radius: 8px; padding: 9px 12px; color: #1a1a1a; outline: none;
-      transition: border-color 0.15s;
-    }
-    .form-row input:focus, .form-row textarea:focus, .form-row select:focus { border-color: var(--blue); background: #fff; }
-    .form-row textarea { height: 90px; resize: none; }
-    .form-submit {
-      width: 100%; background: var(--navy); color: #fff; border: none;
-      padding: 11px; border-radius: 8px; font-size: 14px; font-weight: 600;
-      cursor: pointer; font-family: 'Inter', sans-serif; transition: background 0.15s; margin-top: 6px;
-    }
-    .form-submit:hover { background: var(--blue); }
+    .contact-section{background:var(--paper);}
+    .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;}
+    .contact-info > p{font-size:15px;color:#5a6577;margin-bottom:2rem;}
+    .contact-block{margin-bottom:1.5rem;padding-bottom:1.5rem;border-bottom:1px solid var(--line);}
+    .contact-block:last-of-type{border-bottom:none;}
+    .cb-label{font-size:12px;color:var(--gold);font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.7rem;}
+    .contact-detail{display:flex;align-items:center;gap:11px;margin-bottom:11px;font-size:14px;color:#333;}
+    .contact-detail i{color:var(--gold);font-size:19px;flex-shrink:0;}
+    .contact-detail a{color:#333;text-decoration:none;}
+    .contact-detail a:hover{color:var(--gold);}
+    .person-name{font-weight:600;color:var(--navy);}
+    .map-embed{margin-top:12px;border-radius:12px;overflow:hidden;border:1px solid var(--line);}
+    .contact-form{background:#fff;border-radius:16px;padding:2rem;border:1px solid var(--line);box-shadow:0 8px 28px rgba(13,34,68,.07);align-self:start;}
+    .form-row{margin-bottom:15px;}
+    .form-row label{font-size:12.5px;font-weight:600;color:#444;display:block;margin-bottom:6px;}
+    .form-row input,.form-row textarea,.form-row select{width:100%;font-size:14px;font-family:'Inter',sans-serif;background:var(--paper);border:1px solid #dde5ef;border-radius:9px;padding:10px 13px;color:#1a1a1a;outline:none;transition:border-color .15s,background .15s;}
+    .form-row input:focus,.form-row textarea:focus,.form-row select:focus{border-color:var(--blue);background:#fff;}
+    .form-row textarea{height:95px;resize:none;}
+    .form-submit{width:100%;background:var(--navy);color:#fff;border:none;padding:13px;border-radius:9px;font-size:15px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:background .15s;display:flex;align-items:center;justify-content:center;gap:8px;}
+    .form-submit:hover{background:var(--blue);}
 
     /* FOOTER */
-    footer {
-      padding: 1.75rem 2.5rem; background: var(--navy);
-      display: flex; justify-content: space-between; align-items: center;
-      flex-wrap: wrap; gap: 8px; border-top: 3px solid var(--gold);
-    }
-    footer p { font-size: 13px; color: rgba(255,255,255,0.55); }
-    footer .footer-brand { font-size: 14px; color: var(--gold-light); font-weight: 500; }
+    footer{background:var(--navy-deep);color:#fff;border-top:3px solid var(--gold);}
+    .footer-main{max-width:1240px;margin:0 auto;padding:3rem 2.5rem 2rem;display:grid;grid-template-columns:2fr 1fr 1fr;gap:2.5rem;}
+    .footer-brand-row{display:flex;align-items:center;gap:12px;margin-bottom:1rem;}
+    .footer-brand-row .nav-logo-icon{width:40px;height:40px;}
+    .footer-brand-name{font-size:17px;font-weight:700;color:#fff;}
+    .footer-tag{font-size:13.5px;color:rgba(255,255,255,.55);max-width:300px;line-height:1.6;}
+    .footer-col h5{font-size:13px;font-weight:700;color:var(--gold-light);letter-spacing:.08em;text-transform:uppercase;margin-bottom:1rem;}
+    .footer-col a{display:block;font-size:14px;color:rgba(255,255,255,.7);text-decoration:none;margin-bottom:.6rem;transition:color .15s;}
+    .footer-col a:hover{color:#fff;}
+    .footer-bottom{border-top:1px solid rgba(255,255,255,.1);padding:1.3rem 2.5rem;text-align:center;font-size:13px;color:rgba(255,255,255,.45);}
 
-    @media (max-width: 640px) {
-      nav { padding: 1rem 1.25rem; }
-      .nav-links { display: none; }
-      .hero-content { padding: 3rem 1.25rem; }
-      .hero h1 { font-size: 28px; }
-      .section { padding: 2.5rem 1.25rem; }
-      .stats-bar { flex-wrap: wrap; }
-      .stat-item { min-width: 50%; }
-      .coverage-inner, .contact-grid { grid-template-columns: 1fr; }
-      footer { padding: 1.25rem; }
+    @media(max-width:860px){
+      .feature-block{grid-template-columns:1fr;}
+      .feature-block.flip .fb-img{order:0;}
+      .fb-img{min-height:260px;}
+      .track-wrap{grid-template-columns:1fr;}
+      .mv-grid{grid-template-columns:1fr;}
+      .contact-grid{grid-template-columns:1fr;}
+      .footer-main{grid-template-columns:1fr;gap:1.8rem;}
+    }
+    @media(max-width:680px){
+      nav{padding:1rem 1.3rem;}
+      nav.scrolled{padding:.7rem 1.3rem;}
+      .nav-links{display:none;}
+      .nav-toggle{display:block;}
+      .section{padding:3.5rem 1.3rem;}
+      .hero-content{padding:6rem 1.3rem 3rem;}
+      .fb-text{padding:2rem 1.5rem;}
+      .stat-item{min-width:50%;border-bottom:1px solid rgba(255,255,255,.08);}
     }
   </style>
 </head>
 <body>
 
-  <nav>
-    <a href="#" class="nav-logo">
-      <div class="nav-logo-icon"><i class="ti ti-truck"></i></div>
-      <div>
-        <div class="nav-logo-name">Sandhu Transport</div>
-        <div class="nav-logo-sub">Zambia</div>
-      </div>
+  <nav id="nav">
+    <a href="#home" class="nav-logo">
+      <span class="nav-logo-icon"><i class="ti ti-truck"></i></span>
+      <span><span class="nav-logo-name">Sandhu Transport</span><br><span class="nav-logo-sub">Zambia</span></span>
     </a>
     <div class="nav-links">
       <a href="#services">Services</a>
-      <a href="#coverage">Coverage</a>
-      <a href="#why-us">Why us</a>
+      <a href="#fleet">Fleet</a>
+      <a href="#tracking">Tracking</a>
+      <a href="#routes">Routes</a>
       <a href="#gallery">Gallery</a>
       <a href="#contact">Contact</a>
     </div>
     <a href="#contact" class="nav-cta">Get a quote</a>
   </nav>
 
-  <!-- HERO with truck photo -->
-  <section class="hero">
-    <div class="hero-bg" id="heroBg"></div>
+  <!-- HERO -->
+  <header class="hero" id="home">
+    <div class="hero-bg"></div>
     <div class="hero-overlay"></div>
     <div class="hero-content">
-      <div class="hero-badge">
-        <i class="ti ti-map-pin" style="font-size:13px;"></i>
-        Based in Zambia &middot; Serving Southern Africa
-      </div>
-      <h1>Moving More Than Goods — <span>Moving Promises</span>, Safely &amp; On Time</h1>
-      <p>We move more than goods; we move promises, safely and on time. Operating a modern fleet of 90+ trucks and 10 specialized tankers across Southern Africa, specialising in frozen and refrigerated cargo.</p>
+      <span class="hero-badge"><i class="ti ti-snowflake" style="font-size:14px;"></i> Frozen &amp; refrigerated freight specialists</span>
+      <h1>We Move More Than Goods —<br><span class="gold">We Move Promises</span></h1>
+      <p>Safe, reliable cold-chain and freight logistics across Southern Africa. A modern fleet of 90+ trucks and 10 specialized tankers, tracked in real time, 24/7.</p>
       <div class="hero-btns">
-        <a href="#contact" class="btn-gold">Request a quote</a>
-        <a href="#services" class="btn-outline-white">Our services</a>
+        <a href="#contact" class="btn-gold"><i class="ti ti-file-text"></i> Request a quote</a>
+        <a href="#services" class="btn-ghost"><i class="ti ti-arrow-down"></i> Our services</a>
       </div>
     </div>
-  </section>
+    <a href="#stats" class="hero-scroll"><i class="ti ti-chevron-down"></i></a>
+  </header>
 
-  <!-- STATS BAR -->
-  <div class="stats-bar">
-    <div class="stat-item">
-      <div class="stat-num">20+</div>
-      <div class="stat-label">Years of experience</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-num">90+</div>
-      <div class="stat-label">Trucks in fleet</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-num">130+</div>
-      <div class="stat-label">Employees</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-num">10</div>
-      <div class="stat-label">Specialized tankers</div>
-    </div>
+  <!-- STATS -->
+  <div class="stats-bar" id="stats">
+    <div class="stat-item"><div class="stat-num">20+</div><div class="stat-label">Years of experience</div></div>
+    <div class="stat-item"><div class="stat-num">90+</div><div class="stat-label">Trucks in fleet</div></div>
+    <div class="stat-item"><div class="stat-num">10</div><div class="stat-label">Specialized tankers</div></div>
+    <div class="stat-item"><div class="stat-num">130+</div><div class="stat-label">Employees</div></div>
+    <div class="stat-item"><div class="stat-num">24/7</div><div class="stat-label">Real-time tracking</div></div>
   </div>
 
   <!-- SERVICES -->
-  <section class="section" id="services">
+  <section class="section reveal" id="services">
     <div class="section-label">What we do</div>
     <div class="section-title">Our services</div>
     <div class="gold-divider"></div>
-    <div class="section-sub">We specialise in frozen and refrigerated cargo — alongside a full range of freight, logistics and clearing services across Southern Africa.</div>
+    <div class="section-sub">We specialise in frozen and refrigerated cargo — backed by a full range of freight, logistics and clearing services across Southern Africa.</div>
     <div class="services-grid">
-      <div class="service-card">
-        <div class="service-icon"><i class="ti ti-snowflake" style="color:#C8871A;"></i></div>
-        <h3>Frozen &amp; refrigerated cargo <span style="font-size:10px;background:#C8871A;color:#fff;padding:2px 7px;border-radius:10px;vertical-align:middle;margin-left:4px;">OUR SPECIALITY</span></h3>
-        <p>Our core expertise — temperature-controlled reefer transport for frozen goods, fish, perishables and cold-chain cargo, handled with precision and care across the region.</p>
+      <div class="service-card feature">
+        <i class="ti ti-snowflake service-ic"></i>
+        <h3>Frozen &amp; refrigerated cargo<span class="badge">SPECIALITY</span></h3>
+        <p>Our core expertise — temperature-controlled reefer transport for frozen goods, fish, perishables and cold-chain cargo, handled with precision across the region.</p>
       </div>
-      <div class="service-card">
-        <div class="service-icon"><i class="ti ti-package"></i></div>
-        <h3>Freight transport</h3>
-        <p>Safe, timely transport of goods across Zambia and neighbouring countries.</p>
-      </div>
-      <div class="service-card">
-        <div class="service-icon"><i class="ti ti-world"></i></div>
-        <h3>Cross-border logistics</h3>
-        <p>Customs handling and cross-border delivery to Zimbabwe, Tanzania, DRC, and beyond.</p>
-      </div>
+      <div class="service-card"><i class="ti ti-package service-ic"></i><h3>Freight transport</h3><p>Safe, timely transport of goods across Zambia and neighbouring countries.</p></div>
+      <div class="service-card"><i class="ti ti-world service-ic"></i><h3>Cross-border logistics</h3><p>Customs handling and cross-border delivery to Namibia, DRC, Mozambique, Zimbabwe and South Africa.</p></div>
+      <div class="service-card"><i class="ti ti-droplet service-ic"></i><h3>Bulk liquid &amp; fuel</h3><p>Safe, compliant transportation of fuel and bulk liquids in our 10 purpose-built tanker trailers.</p></div>
+      <div class="service-card"><i class="ti ti-truck-delivery service-ic"></i><h3>Last-mile delivery</h3><p>Local distribution and final-mile delivery throughout Zambia.</p></div>
+      <div class="service-card"><i class="ti ti-clipboard-list service-ic"></i><h3>Clearing &amp; forwarding</h3><p>End-to-end clearing and forwarding for imports and exports across all SADC borders.</p></div>
+    </div>
+  </section>
 
-      <div class="service-card">
-        <div class="service-icon"><i class="ti ti-truck-delivery"></i></div>
-        <h3>Last-mile delivery</h3>
-        <p>Local distribution and final-mile delivery anywhere in Zambia.</p>
+  <!-- FLEET FEATURE BLOCKS -->
+  <section class="section reveal" id="fleet">
+    <div class="section-label">Our fleet</div>
+    <div class="section-title">Built for the long haul</div>
+    <div class="gold-divider"></div>
+    <div class="section-sub">A diverse, well-maintained fleet of premium trucks engineered for the demanding routes of Southern Africa.</div>
+
+    <div class="feature-block">
+      <div class="fb-img" style="background-image:url('fleet/scania-pair-angle.jpg');"></div>
+      <div class="fb-text">
+        <div class="section-label">Reefer specialists</div>
+        <h3>Cold-chain, end to end</h3>
+        <p>Our refrigerated units keep frozen and perishable cargo at the right temperature from collection to final delivery — across borders and through every climate.</p>
+        <ul class="fb-list">
+          <li><i class="ti ti-circle-check"></i> Temperature-controlled reefer containers</li>
+          <li><i class="ti ti-circle-check"></i> Ideal for fish, frozen foods &amp; perishables</li>
+          <li><i class="ti ti-circle-check"></i> Monitored throughout the journey</li>
+        </ul>
       </div>
-      <div class="service-card">
-        <div class="service-icon"><i class="ti ti-file-invoice"></i></div>
-        <h3>Customs clearance</h3>
-        <p>Full documentation and clearance support for all international shipments.</p>
-      </div>
-      <div class="service-card">
-        <div class="service-icon"><i class="ti ti-headset"></i></div>
-        <h3>Dedicated support</h3>
-        <p>Real-time updates and a dedicated point of contact for every shipment.</p>
-      </div>
-      <div class="service-card">
-        <div class="service-icon"><i class="ti ti-droplet"></i></div>
-        <h3>Bulk liquid &amp; fuel transport</h3>
-        <p>Safe, compliant transportation of fuel and bulk liquids in our 10 purpose-built specialized tanker trailers.</p>
-      </div>
-      <div class="service-card">
-        <div class="service-icon"><i class="ti ti-clipboard-list"></i></div>
-        <h3>Clearing &amp; forwarding</h3>
-        <p>End-to-end clearing and forwarding solutions for imports and exports across all SADC borders.</p>
+    </div>
+
+    <div class="feature-block flip">
+      <div class="fb-img" style="background-image:url('fleet/volvo-reefer.jpg');"></div>
+      <div class="fb-text">
+        <div class="section-label">Premium trucks</div>
+        <h3>Scania, Volvo &amp; Freightliner</h3>
+        <p>We run a modern fleet of the world's most trusted heavy-haulage brands, maintained to the highest standards for maximum uptime and safety.</p>
+        <ul class="fb-list">
+          <li><i class="ti ti-circle-check"></i> 90+ trucks &amp; 10 specialized tankers</li>
+          <li><i class="ti ti-circle-check"></i> Regularly serviced for reliability</li>
+          <li><i class="ti ti-circle-check"></i> Experienced, professional drivers</li>
+        </ul>
       </div>
     </div>
   </section>
 
-  <!-- ABOUT -->
-  <section class="section" style="background:#fff;">
-    <div class="section-label">Who we are</div>
-    <div class="section-title">About Sandhu Transport</div>
-    <div class="gold-divider"></div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start;">
-      <div>
-        <p style="font-size:15px;color:#444;line-height:1.8;margin-bottom:1.25rem;">Sandhu Transport is a Freight and Logistics service company that plans, implements and operates supply chain solutions on a national, regional and global scale. We are the driving force that keeps goods moving, businesses running, and commitments delivered on time — every time.</p>
-        <p style="font-size:15px;color:#444;line-height:1.8;">We proudly operate a modern fleet of <strong>90+ trucks</strong> and <strong>10 specialized tankers</strong>, with a team of over <strong>130 employees</strong> united by one goal — delivering value to our clients. Through our comprehensive network of trusted agents, associates, and offices, we guarantee seamless operations across borders.</p>
+  <!-- WHAT WE TRANSPORT -->
+  <section class="dark-section">
+    <div class="section reveal" style="padding-top:5rem;padding-bottom:5rem;">
+      <div class="section-label">What we carry</div>
+      <div class="section-title">Cargo we transport</div>
+      <div class="gold-divider"></div>
+      <div class="section-sub">From frozen goods to fuel, we handle a wide range of cargo across the region.</div>
+      <div class="transport-grid">
+        <div class="transport-item"><i class="ti ti-fish"></i><span>Fish &amp; seafood</span></div>
+        <div class="transport-item"><i class="ti ti-snowflake"></i><span>Frozen foods</span></div>
+        <div class="transport-item"><i class="ti ti-apple"></i><span>Perishables</span></div>
+        <div class="transport-item"><i class="ti ti-droplet"></i><span>Fuel &amp; liquids</span></div>
+        <div class="transport-item"><i class="ti ti-box"></i><span>Containers</span></div>
+        <div class="transport-item"><i class="ti ti-packages"></i><span>General cargo</span></div>
       </div>
-      <div style="display:flex;flex-direction:column;gap:16px;">
-        <div style="background:#0d2244;border-radius:12px;padding:1.4rem;">
-          <div style="font-size:13px;color:#C8871A;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;">Our Mission</div>
-          <p style="font-size:14px;color:rgba(255,255,255,0.8);line-height:1.7;">To provide safe, efficient, and cost-effective transport solutions through modern fleet management, skilled personnel, and a customer-first approach — ensuring every delivery is on time, every time.</p>
-        </div>
-        <div style="background:#C8871A;border-radius:12px;padding:1.4rem;">
-          <div style="font-size:13px;color:#0d2244;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;">Our Vision</div>
-          <p style="font-size:14px;color:#0d2244;line-height:1.7;">To be the most trusted and preferred transport and logistics partner in the region, recognised for our reliability, safety, and commitment to delivering excellence in every journey.</p>
-        </div>
+    </div>
+  </section>
+
+  <!-- TRACKING -->
+  <section class="section reveal" id="tracking">
+    <div class="track-wrap">
+      <div>
+        <div class="section-label">Always connected</div>
+        <div class="section-title">Real-time GPS tracking, 24/7</div>
+        <div class="gold-divider"></div>
+        <p style="font-size:15.5px;color:#5a6577;margin-bottom:1.2rem;">Every vehicle in our fleet is tracked in real time, around the clock. You always know where your cargo is — giving you full visibility, security and peace of mind from collection to delivery.</p>
+        <ul class="fb-list">
+          <li><i class="ti ti-circle-check"></i> Live vehicle location, day and night</li>
+          <li><i class="ti ti-circle-check"></i> Continuous monitoring of every shipment</li>
+          <li><i class="ti ti-circle-check"></i> Greater security for high-value &amp; cold-chain cargo</li>
+        </ul>
+      </div>
+      <div class="track-visual">
+        <div class="track-pulse"></div>
+        <div class="track-stat"><div class="big">24/7</div><div class="lbl">Live fleet monitoring</div></div>
       </div>
     </div>
   </section>
 
   <!-- WHY US -->
-  <section class="section why-section" id="why-us">
-    <div class="section-label">Why choose us</div>
-    <div class="section-title">Built on trust &amp; reliability</div>
-    <div class="gold-divider"></div>
-    <div class="section-sub">We've earned our reputation through consistent, dependable service across Southern Africa.</div>
-    <div class="why-grid">
-      <div class="why-item">
-        <div class="why-icon"><i class="ti ti-shield-check"></i></div>
-        <div><h4>Integrity in every decision</h4><p>Our reputation is built on honesty, transparency and doing the right thing — every time.</p></div>
-      </div>
-      <div class="why-item">
-        <div class="why-icon"><i class="ti ti-target"></i></div>
-        <div><h4>Precision in every load</h4><p>90+ trucks and 10 specialized tankers managed with care, ensuring every delivery is handled correctly.</p></div>
-      </div>
-      <div class="why-item">
-        <div class="why-icon"><i class="ti ti-heart"></i></div>
-        <div><h4>Care in every step</h4><p>From collection to final delivery, our 130+ strong team is committed to your success.</p></div>
-      </div>
-      <div class="why-item">
-        <div class="why-icon"><i class="ti ti-world"></i></div>
-        <div><h4>SADC-wide network</h4><p>Offices and trusted agents across Zambia, Namibia and South Africa for seamless cross-border operations.</p></div>
+  <section class="dark-section">
+    <div class="section reveal" style="padding-top:5rem;padding-bottom:5rem;">
+      <div class="section-label">Why choose us</div>
+      <div class="section-title">Built on trust &amp; reliability</div>
+      <div class="gold-divider"></div>
+      <div class="section-sub">Our reputation is built on consistent, dependable service and the hardworking people behind every delivery.</div>
+      <div class="why-grid">
+        <div class="why-item"><div class="why-ic"><i class="ti ti-shield-check"></i></div><div><h4>Integrity in every decision</h4><p>Honesty, transparency and doing the right thing — every time.</p></div></div>
+        <div class="why-item"><div class="why-ic"><i class="ti ti-target"></i></div><div><h4>Precision in every load</h4><p>Our fleet is managed with care, ensuring every delivery is handled correctly.</p></div></div>
+        <div class="why-item"><div class="why-ic"><i class="ti ti-heart-handshake"></i></div><div><h4>Care in every step</h4><p>From collection to final delivery, our 130+ strong team is committed to your success.</p></div></div>
+        <div class="why-item"><div class="why-ic"><i class="ti ti-users"></i></div><div><h4>Hardworking people</h4><p>Genuinely dedicated drivers and staff who go the extra mile, every journey.</p></div></div>
       </div>
     </div>
   </section>
 
-  <!-- ROUTES & FLEET -->
-  <section class="section" id="coverage" style="background:#f7f9fc;">
+  <!-- ROUTES -->
+  <section class="section reveal" id="routes">
     <div class="section-label">Where we go</div>
-    <div class="section-title">Our routes connecting Zambia</div>
+    <div class="section-title">Routes connecting Zambia</div>
     <div class="gold-divider"></div>
     <div class="section-sub">Operating key freight corridors across Southern Africa — from the Copperbelt to the Atlantic and Indian Ocean ports.</div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-bottom:3rem;">
-      <div style="background:#fff;border:1px solid #e0e8f0;border-radius:12px;padding:1.4rem;border-left:4px solid #C8871A;">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
-          <i class="ti ti-map-pin" style="font-size:20px;color:#C8871A;"></i>
-          <span style="font-size:15px;font-weight:600;color:#0d2244;">Walvis Bay, Namibia</span>
-        </div>
-        <p style="font-size:13px;color:#555;line-height:1.6;">Atlantic coast port — a critical export hub for landlocked Southern African countries. Long-haul westbound corridor.</p>
-      </div>
-      <div style="background:#fff;border:1px solid #e0e8f0;border-radius:12px;padding:1.4rem;border-left:4px solid #C8871A;">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
-          <i class="ti ti-map-pin" style="font-size:20px;color:#C8871A;"></i>
-          <span style="font-size:15px;font-weight:600;color:#0d2244;">Windhoek, Namibia</span>
-        </div>
-        <p style="font-size:13px;color:#555;line-height:1.6;">Capital city freight and distribution across Namibia. Connecting Zambia through Botswana and into the Namibian heartland.</p>
-      </div>
-      <div style="background:#fff;border:1px solid #e0e8f0;border-radius:12px;padding:1.4rem;border-left:4px solid #C8871A;">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
-          <i class="ti ti-map-pin" style="font-size:20px;color:#C8871A;"></i>
-          <span style="font-size:15px;font-weight:600;color:#0d2244;">Beira, Mozambique</span>
-        </div>
-        <p style="font-size:13px;color:#555;line-height:1.6;">Indian Ocean port — a vital corridor for imports and exports through eastern Mozambique. Eastbound route via Zimbabwe.</p>
-      </div>
-      <div style="background:#fff;border:1px solid #e0e8f0;border-radius:12px;padding:1.4rem;border-left:4px solid #C8871A;">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
-          <i class="ti ti-map-pin" style="font-size:20px;color:#C8871A;"></i>
-          <span style="font-size:15px;font-weight:600;color:#0d2244;">Lubumbashi, DRC</span>
-        </div>
-        <p style="font-size:13px;color:#555;line-height:1.6;">Northbound corridor into the Democratic Republic of Congo — serving the mineral-rich Katanga region from the Zambian Copperbelt.</p>
-      </div>
-    </div>
-
-    <div class="section-label" style="margin-top:1rem;">Our fleet</div>
-    <div class="section-title">A diverse, well-maintained fleet</div>
-    <div class="gold-divider"></div>
-    <div class="section-sub">We operate a range of heavy-duty trucks built for the demanding routes of Southern Africa.</div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;">
-      <div style="background:#0d2244;border-radius:12px;padding:1.4rem;display:flex;align-items:flex-start;gap:14px;">
-        <div style="width:44px;height:44px;background:#C8871A;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-          <i class="ti ti-truck" style="font-size:22px;color:#0d2244;"></i>
-        </div>
-        <div>
-          <div style="font-size:15px;font-weight:600;color:#fff;margin-bottom:4px;">Freightliner</div>
-          <div style="font-size:13px;color:rgba(255,255,255,0.6);line-height:1.6;">Heavy-duty long-haul power built for demanding cross-border routes.</div>
-        </div>
-      </div>
-      <div style="background:#0d2244;border-radius:12px;padding:1.4rem;display:flex;align-items:flex-start;gap:14px;">
-        <div style="width:44px;height:44px;background:#C8871A;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-          <i class="ti ti-truck" style="font-size:22px;color:#0d2244;"></i>
-        </div>
-        <div>
-          <div style="font-size:15px;font-weight:600;color:#fff;margin-bottom:4px;">Scania</div>
-          <div style="font-size:13px;color:rgba(255,255,255,0.6);line-height:1.6;">Swedish-engineered reliability, ideal for heavy freight over long distances.</div>
-        </div>
-      </div>
-
-      <div style="background:#0d2244;border-radius:12px;padding:1.4rem;display:flex;align-items:flex-start;gap:14px;">
-        <div style="width:44px;height:44px;background:#C8871A;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-          <i class="ti ti-truck" style="font-size:22px;color:#0d2244;"></i>
-        </div>
-        <div>
-          <div style="font-size:15px;font-weight:600;color:#fff;margin-bottom:4px;">Volvo</div>
-          <div style="font-size:13px;color:rgba(255,255,255,0.6);line-height:1.6;">Premium safety and fuel efficiency across Zambia&apos;s toughest terrain.</div>
-        </div>
-      </div>
+    <div class="routes-grid">
+      <div class="route-card"><div class="rc-head"><i class="ti ti-map-pin"></i><span>Walvis Bay, Namibia</span></div><p>Atlantic coast port — a critical export hub for landlocked Southern Africa. Long-haul westbound corridor.</p></div>
+      <div class="route-card"><div class="rc-head"><i class="ti ti-map-pin"></i><span>Windhoek, Namibia</span></div><p>Capital city freight and distribution, connecting Zambia through Botswana into the Namibian heartland.</p></div>
+      <div class="route-card"><div class="rc-head"><i class="ti ti-map-pin"></i><span>Beira, Mozambique</span></div><p>Indian Ocean port — a vital corridor for imports and exports through eastern Mozambique via Zimbabwe.</p></div>
+      <div class="route-card"><div class="rc-head"><i class="ti ti-map-pin"></i><span>Lubumbashi, DRC</span></div><p>Northbound corridor into the DRC — serving the mineral-rich Katanga region from the Zambian Copperbelt.</p></div>
     </div>
   </section>
 
-  <!-- FLEET GALLERY -->
-  <section class="section" style="background:#fff;" id="gallery">
+  <!-- GALLERY -->
+  <section class="section reveal" id="gallery">
     <div class="section-label">Our fleet in action</div>
     <div class="section-title">On the road across Southern Africa</div>
     <div class="gold-divider"></div>
     <div class="section-sub">A look at our branded trucks and refrigerated trailers operating throughout the region.</div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;">
-      <div style="border-radius:12px;overflow:hidden;border:1px solid #e0e8f0;aspect-ratio:4/3;">
-        <img src="fleet/hero-fleet.jpg" alt="Sandhu Transport Volvo with reefer container at the depot" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;" />
-      </div>
-      <div style="border-radius:12px;overflow:hidden;border:1px solid #e0e8f0;aspect-ratio:4/3;">
-        <img src="fleet/fleet-sunset.jpg" alt="Sandhu Transport refrigerated trailer at a weighbridge" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;" />
-      </div>
-      <div style="border-radius:12px;overflow:hidden;border:1px solid #e0e8f0;aspect-ratio:4/3;">
-        <img src="fleet/fleet-night.jpg" alt="Sandhu Transport Volvo and Daewoo trucks at the depot" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;" />
-      </div>
-      <div style="border-radius:12px;overflow:hidden;border:1px solid #e0e8f0;aspect-ratio:4/3;">
-        <img src="fleet/fleet-freightliner.jpg" alt="Sandhu Transport Freightliner truck with reefer container" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;" />
-      </div>
+    <div class="gallery-grid">
+      <div class="gallery-item"><img src="fleet/scania-pair-front.jpg" alt="Two Sandhu Transport Scania trucks" loading="lazy"></div>
+      <div class="gallery-item"><img src="fleet/fleet-lineup.jpg" alt="Sandhu Transport fleet lineup with containers" loading="lazy"></div>
+      <div class="gallery-item"><img src="fleet/depot-wide.jpg" alt="Sandhu Transport depot in Ndola" loading="lazy"></div>
+      <div class="gallery-item"><img src="fleet/freightliner-gold.jpg" alt="Sandhu Transport gold Freightliner" loading="lazy"></div>
+      <div class="gallery-item"><img src="fleet/volvo-reefer.jpg" alt="Sandhu Transport Volvo with reefer container" loading="lazy"></div>
+      <div class="gallery-item"><img src="fleet/scania-pair-angle.jpg" alt="Sandhu Transport Scania trucks at the depot" loading="lazy"></div>
+    </div>
+  </section>
+
+  <!-- MISSION & VISION -->
+  <section class="section reveal">
+    <div class="section-label">Who we are</div>
+    <div class="section-title">About Sandhu Transport</div>
+    <div class="gold-divider"></div>
+    <p style="font-size:15.5px;color:#5a6577;max-width:760px;margin-bottom:2.2rem;">Sandhu Transport is a freight and logistics company that plans, implements and operates supply chain solutions on a national, regional and global scale. We are the driving force that keeps goods moving, businesses running, and commitments delivered on time — every time. With a fleet of 90+ trucks and a team of over 130 people, we guarantee seamless operations across borders.</p>
+    <div class="mv-grid">
+      <div class="mv-card mission"><div class="mv-lbl">Our Mission</div><p>To provide safe, efficient, and cost-effective transport solutions through modern fleet management, skilled personnel, and a customer-first approach — ensuring every delivery is on time, every time.</p></div>
+      <div class="mv-card vision"><div class="mv-lbl">Our Vision</div><p>To be the most trusted and preferred transport and logistics partner in the region, recognised for our reliability, safety, and commitment to delivering excellence in every journey.</p></div>
+    </div>
+  </section>
+
+  <!-- TRUST / ACCREDITATIONS -->
+  <section class="section reveal" style="padding-top:0;">
+    <div style="text-align:center;margin-bottom:2rem;">
+      <div class="section-label" style="text-align:center;">Licensed &amp; accredited</div>
+      <div class="section-title" style="font-size:24px;">Fully compliant &amp; certified</div>
+    </div>
+    <div class="trust-row">
+      <div class="trust-item"><i class="ti ti-license"></i><span>Road Transport Operator Licence</span></div>
+      <div class="trust-item"><i class="ti ti-world-check"></i><span>SADC Cross-Border Permits</span></div>
+      <div class="trust-item"><i class="ti ti-certificate"></i><span>Fully Insured &amp; Bonded</span></div>
+      <div class="trust-item"><i class="ti ti-shield-check"></i><span>Cold-Chain Compliant</span></div>
     </div>
   </section>
 
   <!-- CONTACT -->
-  <section class="section contact-section" id="contact">
-    <div class="section-label">Get in touch</div>
-    <div class="section-title">Ready to ship?</div>
-    <div class="gold-divider"></div>
-    <div style="margin-top:1.5rem;" class="contact-grid">
-      <div class="contact-info">
-        <p>Whether you need a quick quote or want to discuss a long-term logistics partnership, our team is ready to help. We operate across Zambia, Namibia and South Africa.</p>
-        <div style="margin-top:0.5rem;padding-top:0.5rem;">
-          <div style="font-size:12px;color:#C8871A;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.75rem;">Director</div>
-          <div class="contact-detail"><i class="ti ti-user"></i><span style="font-weight:600;">Harminder Singh</span></div>
-          <div class="contact-detail"><i class="ti ti-mail"></i><a href="mailto:onkarzm@gmail.com" style="color:#333;text-decoration:none;">onkarzm@gmail.com</a></div>
-          <div class="contact-detail"><i class="ti ti-phone"></i><a href="tel:+260977469435" style="color:#333;text-decoration:none;">+260 977 469 435</a></div>
-          <div class="contact-detail"><i class="ti ti-clock"></i><span>Office Hours: Mon–Fri, 8:00 AM – 5:00 PM</span></div>
-        </div>
-        <div style="margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid #e0e8f0;">
-          <div style="font-size:12px;color:#C8871A;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.75rem;">Head of Operations</div>
-          <div class="contact-detail"><i class="ti ti-user"></i><span style="font-weight:600;">Moses Banda</span></div>
-          <div class="contact-detail"><i class="ti ti-mail"></i><a href="mailto:operations@sandhutransportzam.com" style="color:#333;text-decoration:none;">operations@sandhutransportzam.com</a></div>
-          <div class="contact-detail"><i class="ti ti-phone"></i><a href="tel:+260979370189" style="color:#333;text-decoration:none;">+260 979 370 189</a></div>
-          <div style="margin-top:1rem;"></div>
-          <div class="contact-detail"><i class="ti ti-user"></i><span style="font-weight:600;">Richard Silitong</span></div>
-          <div class="contact-detail"><i class="ti ti-mail"></i><a href="mailto:richardaccounts@sandhutransportzam.com" style="color:#333;text-decoration:none;">richardaccounts@sandhutransportzam.com</a></div>
-          <div class="contact-detail"><i class="ti ti-phone"></i><a href="tel:+260763954939" style="color:#333;text-decoration:none;">+260 763 954 939</a></div>
-        </div>
-        <div style="margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid #e0e8f0;">
-          <div style="font-size:12px;color:#C8871A;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.75rem;">Our Location</div>
-          <div class="contact-detail"><i class="ti ti-map-pin"></i><span>Plot 144A Makoli Avenue, Ndola, Zambia</span></div>
-          <div style="margin-top:12px;border-radius:10px;overflow:hidden;border:1px solid #e0e8f0;">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3887.8362452572237!2d28.641364375076595!3d-12.982323487334044!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x196cb4ef3549e6e1%3A0xc41f3e673066e5bf!2sSandhu%20transport%20limited!5e1!3m2!1sen!2szm!4v1781535846395!5m2!1sen!2szm" width="100%" height="220" style="border:0;display:block;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+  <section class="contact-section">
+    <div class="section reveal" id="contact">
+      <div class="section-label">Get in touch</div>
+      <div class="section-title">Ready to ship?</div>
+      <div class="gold-divider"></div>
+      <div class="contact-grid" style="margin-top:1.5rem;">
+        <div class="contact-info">
+          <p>Whether you need a quick quote or want to discuss a long-term logistics partnership, our team is ready to help. We operate across Zambia, Namibia, DRC, Mozambique and South Africa.</p>
+          <div class="contact-block">
+            <div class="cb-label">Director</div>
+            <div class="contact-detail"><i class="ti ti-user"></i><span class="person-name">Harminder Singh</span></div>
+            <div class="contact-detail"><i class="ti ti-mail"></i><a href="mailto:onkarzm@gmail.com">onkarzm@gmail.com</a></div>
+            <div class="contact-detail"><i class="ti ti-phone"></i><a href="tel:+260977469435">+260 977 469 435</a></div>
+            <div class="contact-detail"><i class="ti ti-clock"></i><span>Office Hours: Mon–Fri, 8:00 AM – 5:00 PM</span></div>
+          </div>
+          <div class="contact-block">
+            <div class="cb-label">Head of Operations</div>
+            <div class="contact-detail"><i class="ti ti-user"></i><span class="person-name">Moses Banda</span></div>
+            <div class="contact-detail"><i class="ti ti-mail"></i><a href="mailto:operations@sandhutransportzam.com">operations@sandhutransportzam.com</a></div>
+            <div class="contact-detail"><i class="ti ti-phone"></i><a href="tel:+260979370189">+260 979 370 189</a></div>
+            <div style="height:12px;"></div>
+            <div class="contact-detail"><i class="ti ti-user"></i><span class="person-name">Richard Silitong</span></div>
+            <div class="contact-detail"><i class="ti ti-mail"></i><a href="mailto:richardaccounts@sandhutransportzam.com">richardaccounts@sandhutransportzam.com</a></div>
+            <div class="contact-detail"><i class="ti ti-phone"></i><a href="tel:+260763954939">+260 763 954 939</a></div>
+          </div>
+          <div class="contact-block">
+            <div class="cb-label">Our Location</div>
+            <div class="contact-detail"><i class="ti ti-map-pin"></i><span>Plot 144A Makoli Avenue, Ndola, Zambia</span></div>
+            <div class="map-embed">
+              <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3887.8362452572237!2d28.641364375076595!3d-12.982323487334044!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x196cb4ef3549e6e1%3A0xc41f3e673066e5bf!2sSandhu%20transport%20limited!5e1!3m2!1sen!2szm!4v1781535846395!5m2!1sen!2szm" width="100%" height="230" style="border:0;display:block;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="contact-form">
-        <form action="https://formspree.io/f/xvznlrqd" method="POST">
-          <div class="form-row"><label for="name">Your name</label><input type="text" id="name" name="name" placeholder="John Banda" required /></div>
-          <div class="form-row"><label for="company">Company name</label><input type="text" id="company" name="company" placeholder="Acme Ltd" /></div>
-          <div class="form-row"><label for="phone">Phone number</label><input type="tel" id="phone" name="phone" placeholder="+260 XXX XXX XXX" /></div>
-          <div class="form-row"><label for="email">Email address</label><input type="email" id="email" name="email" placeholder="john@company.com" required /></div>
-          <div class="form-row">
-            <label for="service">Service needed</label>
-            <select id="service" name="service">
-              <option>Freight transport</option>
-              <option>Cross-border logistics</option>
-              <option>Last-mile delivery</option>
-              <option>Refrigerated cargo</option>
-              <option>Fuel &amp; tanker haulage</option>
-              <option>Other</option>
-            </select>
-          </div>
-          <div class="form-row"><label for="message">Message</label><textarea id="message" name="message" placeholder="Tell us about your shipment..."></textarea></div>
-          <button type="submit" class="form-submit">Send enquiry</button>
-        </form>
+        <div class="contact-form">
+          <form action="https://formspree.io/f/xvznlrqd" method="POST">
+            <div class="form-row"><label for="name">Your name</label><input type="text" id="name" name="name" placeholder="John Banda" required /></div>
+            <div class="form-row"><label for="company">Company name</label><input type="text" id="company" name="company" placeholder="Acme Ltd" /></div>
+            <div class="form-row"><label for="phone">Phone number</label><input type="tel" id="phone" name="phone" placeholder="+260 ..." /></div>
+            <div class="form-row"><label for="email">Email address</label><input type="email" id="email" name="email" placeholder="john@company.com" required /></div>
+            <div class="form-row"><label for="service">Service needed</label>
+              <select id="service" name="service">
+                <option>Frozen &amp; refrigerated cargo</option>
+                <option>Freight transport</option>
+                <option>Cross-border logistics</option>
+                <option>Bulk liquid &amp; fuel</option>
+                <option>Last-mile delivery</option>
+                <option>Clearing &amp; forwarding</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="form-row"><label for="message">Message</label><textarea id="message" name="message" placeholder="Tell us about your shipment..."></textarea></div>
+            <button type="submit" class="form-submit"><i class="ti ti-send"></i> Send enquiry</button>
+          </form>
+        </div>
       </div>
     </div>
   </section>
 
+  <!-- FOOTER -->
   <footer>
-    <p>&copy; 2026 Sandhu Transport Zambia. All rights reserved.</p>
-    <p class="footer-brand">We move more than goods; we move promises &middot; Southern Africa</p>
+    <div class="footer-main">
+      <div>
+        <div class="footer-brand-row">
+          <span class="nav-logo-icon"><i class="ti ti-truck"></i></span>
+          <span class="footer-brand-name">Sandhu Transport Zambia</span>
+        </div>
+        <p class="footer-tag">We move more than goods; we move promises, safely and on time. Frozen &amp; refrigerated freight specialists across Southern Africa.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Explore</h5>
+        <a href="#services">Services</a>
+        <a href="#fleet">Fleet</a>
+        <a href="#tracking">Tracking</a>
+        <a href="#routes">Routes</a>
+        <a href="#gallery">Gallery</a>
+      </div>
+      <div class="footer-col">
+        <h5>Contact</h5>
+        <a href="tel:+260977469435">+260 977 469 435</a>
+        <a href="mailto:onkarzm@gmail.com">onkarzm@gmail.com</a>
+        <a href="https://maps.app.goo.gl/BskZraWQc5p3gqGMA" target="_blank">Plot 144A Makoli Ave, Ndola</a>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2026 Sandhu Transport Zambia. All rights reserved. · Logistics &amp; Freight · Southern Africa</div>
   </footer>
 
-  
+  <script>
+    // Sticky nav background on scroll
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 40) nav.classList.add('scrolled');
+      else nav.classList.remove('scrolled');
+    });
+    // Scroll reveal
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+  </script>
 
 </body>
 </html>
