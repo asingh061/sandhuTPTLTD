@@ -6,8 +6,14 @@ from sqlalchemy.orm import Session
 from database import SessionLocal
 from models import InquiryDB
 from schemas import InquiryCreate
+from schemas import InquiryCreate, AIQuestion
+import os
+from dotenv import load_dotenv
+from openai import OpenAI
 
 app = FastAPI()
+load_dotenv()
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 def get_db():
     db = SessionLocal()
@@ -113,8 +119,16 @@ def get_db_inquiries():
 
     return inquiries
         
+@app.post("/api/ask-ai")
+def ask_ai(request: AIQuestion):
+    response = client.responses.create(
+        model="gpt-4.1-mini",
+        input=request.question
+    )
 
-
-
+    return {
+        "question": request.question,
+        "answer": response.output_text
+    }
 
 

@@ -6,3 +6,6 @@ class InquiryCreate(BaseModel):
     email: str
     phone: str
     message: str
+
+class AIQuestion(BaseModel):
+    question: str
