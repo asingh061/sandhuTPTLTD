@@ -11,225 +11,256 @@
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/tabler-icons.min.css" />
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
     :root{
-      --navy:#0d2244; --navy-deep:#081830; --blue:#1A3A6B;
-      --gold:#C8871A; --gold-light:#E8A832; --paper:#f7f9fc; --line:#e0e8f0;
+      --bg:#060f1f;            /* near-black navy base */
+      --bg-2:#081830;          /* deep navy */
+      --navy:#0d2244;
+      --surface:#0e2038;       /* panel surface */
+      --surface-2:#12294a;
+      --gold:#C8871A;
+      --gold-light:#E8A832;
+      --text:#ffffff;
+      --text-dim:#9fb0c8;      /* muted blue-grey */
+      --text-faint:#5f7590;
+      --line:rgba(255,255,255,.09);
+      --line-strong:rgba(255,255,255,.16);
+      --mono:'JetBrains Mono',monospace;
     }
     html{scroll-behavior:smooth;}
-    body{font-family:'Inter',sans-serif;color:#1a1a1a;background:#fff;line-height:1.7;overflow-x:hidden;}
+    body{font-family:'Inter',sans-serif;color:var(--text);background:var(--bg);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+
+    /* ambient background glow */
+    .ambient{position:fixed;inset:0;z-index:0;pointer-events:none;
+      background:
+        radial-gradient(600px circle at 15% 10%,rgba(200,135,26,.10),transparent 60%),
+        radial-gradient(700px circle at 85% 30%,rgba(26,58,107,.35),transparent 55%),
+        radial-gradient(500px circle at 50% 100%,rgba(200,135,26,.06),transparent 60%);}
+    .grid-overlay{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.4;
+      background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+      background-size:64px 64px;
+      mask-image:radial-gradient(circle at 50% 0%,#000 0%,transparent 75%);
+      -webkit-mask-image:radial-gradient(circle at 50% 0%,#000 0%,transparent 75%);}
+    .content{position:relative;z-index:1;}
+
+    /* mono label */
+    .mono-label{font-family:var(--mono);font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-light);display:inline-flex;align-items:center;gap:8px;}
+    .mono-label::before{content:"";width:22px;height:1px;background:var(--gold);display:inline-block;}
 
     /* NAV */
     nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;
-      padding:1.1rem 2.5rem;transition:background .3s,padding .3s,box-shadow .3s;background:transparent;}
-    nav.scrolled{background:rgba(13,34,68,.97);padding:.7rem 2.5rem;box-shadow:0 4px 20px rgba(0,0,0,.25);}
+      padding:1rem 2.5rem;transition:background .3s,padding .3s,border-color .3s;border-bottom:1px solid transparent;}
+    nav.scrolled{background:rgba(6,15,31,.85);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);padding:.7rem 2.5rem;}
     .nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
-    .nav-logo-icon{width:42px;height:42px;background:var(--gold);border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-    .nav-logo-icon i{color:var(--navy);font-size:23px;}
-    .nav-logo-name{font-size:16px;font-weight:700;color:#fff;letter-spacing:.01em;}
-    .nav-logo-sub{font-size:11px;color:rgba(255,255,255,.6);letter-spacing:.18em;text-transform:uppercase;}
+    .nav-logo-icon{width:40px;height:40px;background:linear-gradient(150deg,var(--gold-light),var(--gold));border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 4px 16px rgba(200,135,26,.3);}
+    .nav-logo-icon i{color:var(--bg);font-size:22px;}
+    .nav-logo-name{font-size:15.5px;font-weight:700;color:#fff;letter-spacing:.01em;}
+    .nav-logo-sub{font-family:var(--mono);font-size:10px;color:var(--gold-light);letter-spacing:.22em;text-transform:uppercase;}
     .nav-links{display:flex;gap:1.9rem;align-items:center;}
-    .nav-links a{font-size:14px;color:rgba(255,255,255,.82);text-decoration:none;transition:color .15s;font-weight:500;}
-    .nav-links a:hover{color:var(--gold-light);}
-    .nav-cta{background:var(--gold);color:var(--navy);padding:10px 22px;border-radius:8px;font-size:14px;font-weight:600;text-decoration:none;transition:background .15s,transform .15s;}
-    .nav-cta:hover{background:var(--gold-light);transform:translateY(-1px);}
+    .nav-links a{font-size:13.5px;color:var(--text-dim);text-decoration:none;transition:color .15s;font-weight:500;}
+    .nav-links a:hover{color:#fff;}
+    .nav-cta{font-family:var(--mono);background:var(--gold);color:var(--bg);padding:10px 20px;border-radius:9999px;font-size:12px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;text-decoration:none;transition:background .15s,transform .15s,box-shadow .15s;box-shadow:0 4px 20px rgba(200,135,26,.25);}
+    .nav-cta:hover{background:var(--gold-light);transform:translateY(-1px);box-shadow:0 6px 24px rgba(200,135,26,.4);}
     .nav-toggle{display:none;background:none;border:none;color:#fff;font-size:28px;cursor:pointer;}
 
     /* HERO */
     .hero{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden;}
-    .hero-bg{position:absolute;inset:0;background-image:url('fleet/scania-pair-front.jpg');background-size:cover;background-position:center;animation:slowzoom 20s ease-out forwards;}
-    @keyframes slowzoom{from{transform:scale(1);}to{transform:scale(1.12);}}
-    .hero-overlay{position:absolute;inset:0;background:linear-gradient(105deg,rgba(8,24,48,.93) 0%,rgba(8,24,48,.8) 40%,rgba(8,24,48,.45) 75%,rgba(8,24,48,.25) 100%);}
-    .hero-content{position:relative;z-index:2;padding:7rem 2.5rem 3rem;max-width:760px;color:#fff;}
-    .hero-badge{display:inline-flex;align-items:center;gap:7px;background:rgba(200,135,26,.18);border:1px solid var(--gold);border-radius:30px;padding:6px 16px;font-size:13px;color:var(--gold-light);margin-bottom:1.6rem;font-weight:500;}
-    .hero h1{font-size:clamp(34px,5.5vw,60px);font-weight:800;line-height:1.08;letter-spacing:-.02em;margin-bottom:1.4rem;}
-    .hero h1 .gold{color:var(--gold-light);}
-    .hero p{font-size:clamp(15px,2vw,18px);color:rgba(255,255,255,.8);max-width:540px;margin-bottom:2.2rem;font-weight:400;}
-    .hero-btns{display:flex;gap:14px;flex-wrap:wrap;}
-    .btn-gold{background:var(--gold);color:var(--navy);padding:13px 28px;border-radius:9px;font-size:15px;font-weight:600;text-decoration:none;transition:background .15s,transform .15s;display:inline-flex;align-items:center;gap:8px;}
-    .btn-gold:hover{background:var(--gold-light);transform:translateY(-2px);}
-    .btn-ghost{background:rgba(255,255,255,.08);backdrop-filter:blur(4px);color:#fff;padding:13px 28px;border-radius:9px;font-size:15px;font-weight:500;text-decoration:none;border:1px solid rgba(255,255,255,.4);transition:background .15s;display:inline-flex;align-items:center;gap:8px;}
-    .btn-ghost:hover{background:rgba(255,255,255,.18);}
-    .hero-scroll{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);z-index:2;color:rgba(255,255,255,.6);font-size:24px;animation:bounce 2s infinite;}
-    @keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0);}50%{transform:translateX(-50%) translateY(8px);}}
+    .hero-media{position:absolute;inset:0;z-index:0;}
+    .hero-media::after{content:"";position:absolute;inset:0;background:
+      linear-gradient(90deg,var(--bg) 8%,rgba(6,15,31,.72) 48%,rgba(6,15,31,.35) 100%),
+      linear-gradient(0deg,var(--bg) 2%,transparent 40%);}
+    .hero-media img{width:100%;height:100%;object-fit:cover;opacity:.9;animation:slowzoom 22s ease-out forwards;}
+    @keyframes slowzoom{from{transform:scale(1.05);}to{transform:scale(1.16);}}
+    .hero-inner{position:relative;z-index:2;max-width:1280px;margin:0 auto;padding:7rem 2.5rem 3rem;width:100%;}
+    .hero-status{display:inline-flex;align-items:center;gap:9px;font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-dim);border:1px solid var(--line-strong);border-radius:9999px;padding:7px 15px;margin-bottom:1.8rem;background:rgba(6,15,31,.4);backdrop-filter:blur(6px);}
+    .status-dot{width:7px;height:7px;border-radius:50%;background:#33d67f;box-shadow:0 0 0 0 rgba(51,214,127,.6);animation:livepulse 2s infinite;}
+    @keyframes livepulse{0%{box-shadow:0 0 0 0 rgba(51,214,127,.55);}70%{box-shadow:0 0 0 7px rgba(51,214,127,0);}100%{box-shadow:0 0 0 0 rgba(51,214,127,0);}}
+    .hero h1{font-size:clamp(38px,6vw,74px);font-weight:700;line-height:1.02;letter-spacing:-.03em;margin-bottom:1.5rem;max-width:900px;}
+    .hero h1 .gold{background:linear-gradient(120deg,var(--gold-light),var(--gold));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+    .hero p{font-size:clamp(15px,1.6vw,18px);color:var(--text-dim);max-width:540px;margin-bottom:2.4rem;}
+    .hero-btns{display:flex;gap:14px;flex-wrap:wrap;align-items:center;}
+    .btn-primary{font-family:var(--mono);background:var(--gold);color:var(--bg);padding:14px 26px;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;text-decoration:none;transition:background .15s,transform .15s,box-shadow .15s;display:inline-flex;align-items:center;gap:9px;box-shadow:0 6px 24px rgba(200,135,26,.28);}
+    .btn-primary:hover{background:var(--gold-light);transform:translateY(-2px);box-shadow:0 10px 30px rgba(200,135,26,.4);}
+    .btn-secondary{font-family:var(--mono);background:rgba(255,255,255,.05);color:#fff;padding:14px 26px;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;text-decoration:none;border:1px solid var(--line-strong);transition:background .15s,border-color .15s;display:inline-flex;align-items:center;gap:9px;}
+    .btn-secondary:hover{background:rgba(255,255,255,.1);border-color:var(--gold);}
 
-    /* STATS */
-    .stats-bar{background:var(--navy);display:flex;justify-content:center;flex-wrap:wrap;border-bottom:3px solid var(--gold);}
-    .stat-item{flex:1;min-width:160px;max-width:260px;padding:1.7rem 1rem;text-align:center;border-right:1px solid rgba(255,255,255,.08);}
-    .stat-item:last-child{border-right:none;}
-    .stat-num{font-size:34px;font-weight:800;color:var(--gold-light);letter-spacing:-.02em;}
-    .stat-label{font-size:12.5px;color:rgba(255,255,255,.6);margin-top:3px;letter-spacing:.03em;}
+    /* live stat ticker under hero */
+    .ticker{position:relative;z-index:2;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:rgba(6,15,31,.6);backdrop-filter:blur(8px);}
+    .ticker-inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr);}
+    .ticker-cell{padding:1.5rem 1.5rem;border-right:1px solid var(--line);}
+    .ticker-cell:last-child{border-right:none;}
+    .ticker-num{font-size:30px;font-weight:700;letter-spacing:-.02em;color:#fff;}
+    .ticker-num .u{color:var(--gold-light);}
+    .ticker-lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-dim);margin-top:4px;}
 
-    /* SECTIONS */
-    .section{padding:5.5rem 2.5rem;max-width:1240px;margin:0 auto;}
-    .section-label{font-size:12px;color:var(--gold);font-weight:700;letter-spacing:.14em;text-transform:uppercase;margin-bottom:.6rem;}
-    .section-title{font-size:clamp(26px,3.5vw,38px);font-weight:800;letter-spacing:-.02em;color:var(--navy);line-height:1.15;margin-bottom:.7rem;}
-    .gold-divider{height:3px;background:var(--gold);width:54px;margin:0 0 1.6rem;border-radius:2px;}
-    .section-sub{font-size:16px;color:#5a6577;max-width:560px;margin-bottom:2.8rem;}
+    /* SECTION SHELL */
+    .section{max-width:1280px;margin:0 auto;padding:6rem 2.5rem;}
+    .section-head{margin-bottom:3rem;max-width:640px;}
+    .section-title{font-size:clamp(28px,3.6vw,44px);font-weight:700;letter-spacing:-.025em;line-height:1.1;margin-top:1rem;}
+    .section-sub{font-size:16px;color:var(--text-dim);margin-top:1rem;}
 
-    /* reveal animation */
-    .reveal{opacity:0;transform:translateY(34px);transition:opacity .7s ease,transform .7s ease;}
+    /* reveal */
+    .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1);}
     .reveal.visible{opacity:1;transform:none;}
+    .stagger>*{opacity:0;transform:translateY(24px);transition:opacity .6s cubic-bezier(.2,.7,.2,1),transform .6s cubic-bezier(.2,.7,.2,1);}
+    .stagger.visible>*{opacity:1;transform:none;}
+    .stagger.visible>*:nth-child(1){transition-delay:.04s;}
+    .stagger.visible>*:nth-child(2){transition-delay:.10s;}
+    .stagger.visible>*:nth-child(3){transition-delay:.16s;}
+    .stagger.visible>*:nth-child(4){transition-delay:.22s;}
+    .stagger.visible>*:nth-child(5){transition-delay:.28s;}
+    .stagger.visible>*:nth-child(6){transition-delay:.34s;}
 
-    /* SERVICES */
-    .services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:18px;}
-    .service-card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:1.6rem;transition:box-shadow .2s,transform .2s,border-color .2s;}
-    .service-card:hover{box-shadow:0 12px 32px rgba(13,34,68,.1);transform:translateY(-4px);border-color:#c8d4e8;}
-    .service-card.feature{border:2px solid var(--gold);background:linear-gradient(165deg,#fffdf8,#fff);}
-    .service-ic{font-size:32px;color:var(--blue);margin-bottom:.9rem;display:block;}
-    .service-card.feature .service-ic{color:var(--gold);}
-    .service-card h3{font-size:16px;font-weight:700;margin-bottom:7px;color:var(--navy);}
-    .badge{font-size:9.5px;background:var(--gold);color:#fff;padding:2px 8px;border-radius:10px;vertical-align:middle;margin-left:5px;letter-spacing:.05em;font-weight:600;}
-    .service-card p{font-size:13.5px;color:#5a6577;line-height:1.65;}
+    /* PANEL / CARD */
+    .panel{background:linear-gradient(160deg,var(--surface),var(--bg-2));border:1px solid var(--line);border-radius:16px;padding:24px;transition:border-color .2s,transform .2s,box-shadow .2s;position:relative;overflow:hidden;}
+    .panel:hover{border-color:var(--line-strong);transform:translateY(-4px);box-shadow:0 18px 40px rgba(0,0,0,.4);}
+    .panel.feature{border-color:rgba(200,135,26,.45);background:linear-gradient(160deg,rgba(200,135,26,.10),var(--bg-2));}
+    .panel-ic{width:46px;height:46px;border-radius:11px;background:rgba(200,135,26,.12);border:1px solid rgba(200,135,26,.3);display:flex;align-items:center;justify-content:center;margin-bottom:1.1rem;}
+    .panel-ic i{font-size:23px;color:var(--gold-light);}
+    .panel h3{font-size:16.5px;font-weight:650;margin-bottom:8px;letter-spacing:-.01em;}
+    .panel p{font-size:13.5px;color:var(--text-dim);line-height:1.65;}
+    .panel .tag{position:absolute;top:16px;right:16px;font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--bg);background:var(--gold);padding:3px 9px;border-radius:9999px;font-weight:600;}
 
-    /* ALTERNATING FEATURE BLOCKS */
-    .feature-block{display:grid;grid-template-columns:1fr 1fr;gap:0;align-items:stretch;border-radius:18px;overflow:hidden;box-shadow:0 14px 44px rgba(13,34,68,.1);margin-bottom:2rem;background:#fff;}
-    .feature-block.flip .fb-img{order:2;}
-    .fb-img{min-height:380px;background-size:cover;background-position:center;}
-    .fb-text{padding:3rem 2.8rem;display:flex;flex-direction:column;justify-content:center;}
-    .fb-text .section-label{margin-bottom:.5rem;}
-    .fb-text h3{font-size:26px;font-weight:800;color:var(--navy);letter-spacing:-.01em;margin-bottom:.8rem;line-height:1.2;}
-    .fb-text p{font-size:15px;color:#5a6577;margin-bottom:1rem;}
-    .fb-list{list-style:none;display:flex;flex-direction:column;gap:10px;}
-    .fb-list li{display:flex;gap:10px;align-items:flex-start;font-size:14.5px;color:#3a4759;}
-    .fb-list li i{color:var(--gold);font-size:18px;flex-shrink:0;margin-top:1px;}
+    .grid-3{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;}
+    .grid-2{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;}
 
-    /* DARK SECTION */
-    .dark-section{background:linear-gradient(160deg,var(--navy-deep),var(--navy));color:#fff;}
-    .dark-section .section-title{color:#fff;}
-    .dark-section .section-sub{color:rgba(255,255,255,.65);}
+    /* FEATURE BLOCK (split) */
+    .split{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:stretch;margin-bottom:16px;}
+    .split.flip .split-media{order:2;}
+    .split-media{border-radius:16px;overflow:hidden;border:1px solid var(--line);min-height:360px;position:relative;}
+    .split-media img{width:100%;height:100%;object-fit:cover;transition:transform .6s;}
+    .split:hover .split-media img{transform:scale(1.05);}
+    .split-body{background:linear-gradient(160deg,var(--surface),var(--bg-2));border:1px solid var(--line);border-radius:16px;padding:2.8rem;display:flex;flex-direction:column;justify-content:center;}
+    .split-body h3{font-size:25px;font-weight:700;letter-spacing:-.02em;margin:.8rem 0;}
+    .split-body p{font-size:14.5px;color:var(--text-dim);margin-bottom:1.2rem;}
+    .flist{list-style:none;display:flex;flex-direction:column;gap:11px;}
+    .flist li{display:flex;gap:11px;align-items:flex-start;font-size:14px;color:#cdd8e8;}
+    .flist li i{color:var(--gold-light);font-size:18px;flex-shrink:0;}
 
-    /* TRANSPORT GRID */
-    .transport-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;}
-    .transport-item{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:1.3rem;text-align:center;transition:background .2s,transform .2s;}
-    .transport-item:hover{background:rgba(200,135,26,.14);transform:translateY(-3px);}
-    .transport-item i{font-size:30px;color:var(--gold-light);margin-bottom:.6rem;display:block;}
-    .transport-item span{font-size:14px;color:#fff;font-weight:500;}
-
-    /* WHY GRID */
-    .why-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:22px;}
-    .why-item{display:flex;gap:15px;align-items:flex-start;}
-    .why-ic{width:46px;height:46px;background:var(--gold);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-    .why-ic i{color:var(--navy);font-size:22px;}
-    .why-item h4{font-size:15px;font-weight:700;margin-bottom:5px;color:#fff;}
-    .why-item p{font-size:13.5px;color:rgba(255,255,255,.6);line-height:1.6;}
+    /* TRANSPORT chips */
+    .chips{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;}
+    .chip{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:1.3rem;text-align:center;transition:background .2s,border-color .2s,transform .2s;}
+    .chip:hover{background:var(--surface-2);border-color:rgba(200,135,26,.4);transform:translateY(-3px);}
+    .chip i{font-size:28px;color:var(--gold-light);display:block;margin-bottom:.6rem;}
+    .chip span{font-size:13.5px;font-weight:500;}
 
     /* TRACKING */
-    .track-wrap{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center;}
-    .track-visual{background:linear-gradient(150deg,#102a52,#0d2244);border:1px solid rgba(255,255,255,.1);border-radius:18px;padding:2.5rem;position:relative;overflow:hidden;min-height:300px;display:flex;flex-direction:column;justify-content:center;}
-    .track-pulse{position:absolute;top:50%;left:50%;width:16px;height:16px;background:var(--gold-light);border-radius:50%;transform:translate(-50%,-50%);}
-    .track-pulse::before,.track-pulse::after{content:'';position:absolute;inset:0;border-radius:50%;background:var(--gold-light);animation:pulsering 2.4s ease-out infinite;}
-    .track-pulse::after{animation-delay:1.2s;}
-    @keyframes pulsering{0%{transform:scale(1);opacity:.7;}100%{transform:scale(9);opacity:0;}}
-    .track-stat{position:relative;z-index:2;text-align:center;}
-    .track-stat .big{font-size:46px;font-weight:800;color:#fff;}
-    .track-stat .lbl{font-size:14px;color:rgba(255,255,255,.6);}
+    .track{display:grid;grid-template-columns:1.1fr .9fr;gap:16px;align-items:stretch;}
+    .track-panel{background:linear-gradient(160deg,var(--surface),var(--bg-2));border:1px solid var(--line);border-radius:16px;padding:2.6rem;}
+    .track-viz{background:radial-gradient(circle at 50% 50%,var(--surface-2),var(--bg-2));border:1px solid var(--line);border-radius:16px;position:relative;overflow:hidden;min-height:320px;display:flex;align-items:center;justify-content:center;}
+    .radar{position:absolute;width:70%;aspect-ratio:1;border-radius:50%;border:1px solid var(--line-strong);}
+    .radar::before,.radar::after{content:"";position:absolute;inset:0;border-radius:50%;border:1px solid var(--line);}
+    .radar::before{inset:22%;} .radar::after{inset:44%;}
+    .radar-dot{position:absolute;top:50%;left:50%;width:14px;height:14px;background:var(--gold-light);border-radius:50%;transform:translate(-50%,-50%);z-index:2;box-shadow:0 0 16px var(--gold-light);}
+    .radar-ping{position:absolute;top:50%;left:50%;width:14px;height:14px;border-radius:50%;background:var(--gold-light);transform:translate(-50%,-50%);animation:ping 2.6s ease-out infinite;}
+    @keyframes ping{0%{transform:translate(-50%,-50%) scale(1);opacity:.7;}100%{transform:translate(-50%,-50%) scale(11);opacity:0;}}
+    .radar-sweep{position:absolute;top:50%;left:50%;width:50%;height:1px;background:linear-gradient(90deg,var(--gold-light),transparent);transform-origin:left center;animation:sweep 4s linear infinite;}
+    @keyframes sweep{from{transform:rotate(0);}to{transform:rotate(360deg);}}
+    .track-badge{position:relative;z-index:3;text-align:center;background:rgba(6,15,31,.5);padding:1rem 1.4rem;border-radius:12px;border:1px solid var(--line);backdrop-filter:blur(4px);}
+    .track-badge .big{font-family:var(--mono);font-size:34px;font-weight:600;color:#fff;}
+    .track-badge .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-dim);margin-top:2px;}
 
     /* ROUTES */
-    .routes-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;}
-    .route-card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:1.5rem;border-left:4px solid var(--gold);transition:transform .2s,box-shadow .2s;}
-    .route-card:hover{transform:translateY(-4px);box-shadow:0 12px 30px rgba(13,34,68,.1);}
-    .route-card .rc-head{display:flex;align-items:center;gap:9px;margin-bottom:9px;}
-    .route-card .rc-head i{font-size:21px;color:var(--gold);}
-    .route-card .rc-head span{font-size:16px;font-weight:700;color:var(--navy);}
-    .route-card p{font-size:13px;color:#5a6577;line-height:1.6;}
+    .route{background:linear-gradient(160deg,var(--surface),var(--bg-2));border:1px solid var(--line);border-radius:14px;padding:1.5rem;transition:border-color .2s,transform .2s;position:relative;}
+    .route:hover{border-color:rgba(200,135,26,.45);transform:translateY(-4px);}
+    .route .code{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--gold-light);}
+    .route h4{font-size:17px;font-weight:650;margin:6px 0 8px;}
+    .route p{font-size:12.8px;color:var(--text-dim);line-height:1.6;}
 
     /* GALLERY */
-    .gallery-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;}
-    .gallery-item{border-radius:14px;overflow:hidden;aspect-ratio:4/3;border:1px solid var(--line);}
-    .gallery-item img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s;}
-    .gallery-item:hover img{transform:scale(1.07);}
+    .gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;}
+    .shot{border-radius:14px;overflow:hidden;border:1px solid var(--line);aspect-ratio:4/3;position:relative;}
+    .shot img{width:100%;height:100%;object-fit:cover;transition:transform .55s;}
+    .shot:hover img{transform:scale(1.07);}
+    .shot::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(6,15,31,.4),transparent 45%);}
 
-    /* MISSION/VISION */
-    .mv-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
-    .mv-card{border-radius:16px;padding:2rem;}
-    .mv-card.mission{background:linear-gradient(160deg,var(--navy),var(--blue));}
-    .mv-card.vision{background:linear-gradient(160deg,var(--gold),var(--gold-light));}
-    .mv-card .mv-lbl{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.7rem;}
-    .mv-card.mission .mv-lbl{color:var(--gold-light);} .mv-card.mission p{color:rgba(255,255,255,.85);}
-    .mv-card.vision .mv-lbl{color:var(--navy);} .mv-card.vision p{color:var(--navy);}
-    .mv-card p{font-size:15px;line-height:1.7;}
+    /* MISSION / VISION */
+    .mv{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+    .mv-card{border-radius:16px;padding:2rem;border:1px solid var(--line);}
+    .mv-card.mission{background:linear-gradient(160deg,var(--surface),var(--bg-2));}
+    .mv-card.vision{background:linear-gradient(160deg,rgba(200,135,26,.14),var(--bg-2));border-color:rgba(200,135,26,.35);}
+    .mv-card p{font-size:14.5px;color:#cdd8e8;line-height:1.7;margin-top:.7rem;}
 
-    /* TRUST/ACCREDITATIONS */
-    .trust-row{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;}
-    .trust-item{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:1rem 1.5rem;}
-    .trust-item i{font-size:26px;color:var(--gold);}
-    .trust-item span{font-size:14px;font-weight:600;color:var(--navy);}
-
-    /* CONTACT */
-    .contact-section{background:var(--paper);}
-    .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;}
-    .contact-info > p{font-size:15px;color:#5a6577;margin-bottom:2rem;}
-    .contact-block{margin-bottom:1.5rem;padding-bottom:1.5rem;border-bottom:1px solid var(--line);}
-    .contact-block:last-of-type{border-bottom:none;}
-    .cb-label{font-size:12px;color:var(--gold);font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.7rem;}
-    .contact-detail{display:flex;align-items:center;gap:11px;margin-bottom:11px;font-size:14px;color:#333;}
-    .contact-detail i{color:var(--gold);font-size:19px;flex-shrink:0;}
-    .contact-detail a{color:#333;text-decoration:none;}
-    .contact-detail a:hover{color:var(--gold);}
-    .person-name{font-weight:600;color:var(--navy);}
-    .map-embed{margin-top:12px;border-radius:12px;overflow:hidden;border:1px solid var(--line);}
-    .contact-form{background:#fff;border-radius:16px;padding:2rem;border:1px solid var(--line);box-shadow:0 8px 28px rgba(13,34,68,.07);align-self:start;}
-    .form-row{margin-bottom:15px;}
-    .form-row label{font-size:12.5px;font-weight:600;color:#444;display:block;margin-bottom:6px;}
-    .form-row input,.form-row textarea,.form-row select{width:100%;font-size:14px;font-family:'Inter',sans-serif;background:var(--paper);border:1px solid #dde5ef;border-radius:9px;padding:10px 13px;color:#1a1a1a;outline:none;transition:border-color .15s,background .15s;}
-    .form-row input:focus,.form-row textarea:focus,.form-row select:focus{border-color:var(--blue);background:#fff;}
-    .form-row textarea{height:95px;resize:none;}
-    .form-submit{width:100%;background:var(--navy);color:#fff;border:none;padding:13px;border-radius:9px;font-size:15px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:background .15s;display:flex;align-items:center;justify-content:center;gap:8px;}
-    .form-submit:hover{background:var(--blue);}
-
-    /* FOOTER */
-    footer{background:var(--navy-deep);color:#fff;border-top:3px solid var(--gold);}
-    .footer-main{max-width:1240px;margin:0 auto;padding:3rem 2.5rem 2rem;display:grid;grid-template-columns:2fr 1fr 1fr;gap:2.5rem;}
-    .footer-brand-row{display:flex;align-items:center;gap:12px;margin-bottom:1rem;}
-    .footer-brand-row .nav-logo-icon{width:40px;height:40px;}
-    .footer-brand-name{font-size:17px;font-weight:700;color:#fff;}
-    .footer-tag{font-size:13.5px;color:rgba(255,255,255,.55);max-width:300px;line-height:1.6;}
-    .footer-col h5{font-size:13px;font-weight:700;color:var(--gold-light);letter-spacing:.08em;text-transform:uppercase;margin-bottom:1rem;}
-    .footer-col a{display:block;font-size:14px;color:rgba(255,255,255,.7);text-decoration:none;margin-bottom:.6rem;transition:color .15s;}
-    .footer-col a:hover{color:#fff;}
-    .footer-bottom{border-top:1px solid rgba(255,255,255,.1);padding:1.3rem 2.5rem;text-align:center;font-size:13px;color:rgba(255,255,255,.45);}
+    /* TRUST */
+    .trust{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;}
+    .trust-item{display:flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--line);border-radius:9999px;padding:.8rem 1.4rem;}
+    .trust-item i{font-size:20px;color:var(--gold-light);}
+    .trust-item span{font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:#cdd8e8;}
 
     /* AI CHAT */
-    .ai-section{background:linear-gradient(160deg,var(--navy-deep),var(--navy));color:#fff;}
-    .ai-wrap{max-width:760px;margin:0 auto;text-align:center;}
-    .ai-inputrow{display:flex;gap:10px;margin-top:1.8rem;max-width:600px;margin-left:auto;margin-right:auto;}
-    #questionInput{flex:1;font-family:'Inter',sans-serif;font-size:15px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.2);border-radius:10px;padding:13px 16px;color:#fff;outline:none;transition:border-color .15s;}
-    #questionInput::placeholder{color:rgba(255,255,255,.45);}
+    .ai-panel{background:linear-gradient(160deg,var(--surface),var(--bg-2));border:1px solid var(--line);border-radius:18px;padding:2.5rem;max-width:760px;margin:0 auto;text-align:center;}
+    .ai-inputrow{display:flex;gap:10px;margin-top:1.6rem;}
+    #questionInput{flex:1;font-family:'Inter',sans-serif;font-size:15px;background:var(--bg);border:1px solid var(--line-strong);border-radius:10px;padding:14px 16px;color:#fff;outline:none;transition:border-color .15s;}
+    #questionInput::placeholder{color:var(--text-dim);}
     #questionInput:focus{border-color:var(--gold);}
-    #ai-section button{background:var(--gold);color:var(--navy);border:none;padding:0 26px;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:background .15s;}
-    #ai-section button:hover{background:var(--gold-light);}
-    #chatBox{margin-top:1.6rem;text-align:left;display:flex;flex-direction:column;gap:12px;max-width:600px;margin-left:auto;margin-right:auto;}
-    .chat-msg{padding:12px 16px;border-radius:12px;font-size:14.5px;line-height:1.6;}
-    .chat-q{background:var(--gold);color:var(--navy);align-self:flex-end;max-width:85%;font-weight:500;}
-    .chat-a{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);color:#fff;align-self:flex-start;max-width:90%;}
-    @media(max-width:680px){.ai-inputrow{flex-direction:column;}#ai-section button{padding:13px;}}
+    #ai-chat button{font-family:var(--mono);background:var(--gold);color:var(--bg);border:none;padding:0 26px;border-radius:10px;font-size:12px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;cursor:pointer;transition:background .15s;}
+    #ai-chat button:hover{background:var(--gold-light);}
+    #chatBox{margin-top:1.5rem;text-align:left;display:flex;flex-direction:column;gap:11px;}
+    #chatBox p{padding:12px 15px;border-radius:11px;font-size:14px;line-height:1.6;margin:0;}
+    #chatBox p strong{color:var(--gold-light);font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;display:block;margin-bottom:3px;}
+    #chatBox .q{background:rgba(200,135,26,.12);border:1px solid rgba(200,135,26,.25);}
+    #chatBox .a{background:var(--bg);border:1px solid var(--line);}
 
-    @media(max-width:860px){
-      .feature-block{grid-template-columns:1fr;}
-      .feature-block.flip .fb-img{order:0;}
-      .fb-img{min-height:260px;}
-      .track-wrap{grid-template-columns:1fr;}
-      .mv-grid{grid-template-columns:1fr;}
-      .contact-grid{grid-template-columns:1fr;}
+    /* CONTACT */
+    .contact{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+    .contact-panel{background:linear-gradient(160deg,var(--surface),var(--bg-2));border:1px solid var(--line);border-radius:16px;padding:2rem;}
+    .cblock{margin-bottom:1.4rem;padding-bottom:1.4rem;border-bottom:1px solid var(--line);}
+    .cblock:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+    .cblock .clabel{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-light);margin-bottom:.8rem;}
+    .cdetail{display:flex;align-items:center;gap:11px;margin-bottom:10px;font-size:14px;color:#cdd8e8;}
+    .cdetail i{color:var(--gold);font-size:18px;flex-shrink:0;}
+    .cdetail a{color:#cdd8e8;text-decoration:none;}
+    .cdetail a:hover{color:#fff;}
+    .cname{font-weight:600;color:#fff;}
+    .map-embed{margin-top:12px;border-radius:12px;overflow:hidden;border:1px solid var(--line);}
+    .cta-btn{font-family:var(--mono);width:100%;display:flex;align-items:center;justify-content:center;gap:9px;padding:14px;border-radius:11px;font-size:12.5px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;text-decoration:none;margin-bottom:11px;transition:transform .15s,box-shadow .15s;}
+    .cta-btn:hover{transform:translateY(-2px);}
+    .cta-call{background:var(--surface-2);color:#fff;border:1px solid var(--line-strong);}
+    .cta-email{background:var(--gold);color:var(--bg);}
+    .cta-wa{background:#25D366;color:#062b16;}
+    .privacy-note{font-size:12px;color:var(--text-dim);margin-top:1.2rem;text-align:center;}
+
+    /* FOOTER */
+    footer{border-top:1px solid var(--line);background:var(--bg-2);position:relative;z-index:1;}
+    .footer-main{max-width:1280px;margin:0 auto;padding:3.5rem 2.5rem 2rem;display:grid;grid-template-columns:2fr 1fr 1fr;gap:2.5rem;}
+    .footer-brand{display:flex;align-items:center;gap:12px;margin-bottom:1rem;}
+    .footer-brand .nav-logo-icon{width:38px;height:38px;}
+    .footer-brand-name{font-size:16px;font-weight:700;}
+    .footer-tag{font-size:13.5px;color:var(--text-dim);max-width:320px;line-height:1.6;}
+    .footer-col h5{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-light);margin-bottom:1rem;}
+    .footer-col a{display:block;font-size:13.5px;color:var(--text-dim);text-decoration:none;margin-bottom:.6rem;transition:color .15s;}
+    .footer-col a:hover{color:#fff;}
+    .footer-bottom{border-top:1px solid var(--line);padding:1.4rem 2.5rem;text-align:center;font-size:12.5px;color:var(--text-dim);}
+    .footer-bottom a{color:var(--text-dim);text-decoration:none;}
+    .footer-bottom a:hover{color:#fff;}
+
+    @media(max-width:900px){
+      .ticker-inner{grid-template-columns:repeat(3,1fr);}
+      .ticker-cell:nth-child(n+4){border-top:1px solid var(--line);}
+      .split,.split.flip .split-media{grid-template-columns:1fr;}
+      .split.flip .split-media{order:0;}
+      .track{grid-template-columns:1fr;}
+      .mv{grid-template-columns:1fr;}
+      .contact{grid-template-columns:1fr;}
       .footer-main{grid-template-columns:1fr;gap:1.8rem;}
     }
     @media(max-width:680px){
       nav{padding:1rem 1.3rem;}
-      nav.scrolled{padding:.7rem 1.3rem;}
       .nav-links{display:none;}
-      .nav-toggle{display:block;}
-      .section{padding:3.5rem 1.3rem;}
-      .hero-content{padding:6rem 1.3rem 3rem;}
-      .fb-text{padding:2rem 1.5rem;}
-      .stat-item{min-width:50%;border-bottom:1px solid rgba(255,255,255,.08);}
+      .section{padding:4rem 1.3rem;}
+      .hero-inner{padding:6rem 1.3rem 3rem;}
+      .ticker-inner{grid-template-columns:repeat(2,1fr);}
+      .split-body{padding:2rem 1.5rem;}
     }
   </style>
 </head>
 <body>
+  <div class="ambient"></div>
+  <div class="grid-overlay"></div>
+  <div class="content">
 
   <nav id="nav">
     <a href="#home" class="nav-logo">
@@ -242,7 +273,7 @@
       <a href="#tracking">Tracking</a>
       <a href="#routes">Routes</a>
       <a href="#gallery">Gallery</a>
-      <a href="#ai-section">Ask AI</a>
+      <a href="#ai-chat">Ask AI</a>
       <a href="#contact">Contact</a>
     </div>
     <a href="#contact" class="nav-cta">Get a quote</a>
@@ -250,77 +281,73 @@
 
   <!-- HERO -->
   <header class="hero" id="home">
-    <div class="hero-bg"></div>
-    <div class="hero-overlay"></div>
-    <div class="hero-content">
-      <span class="hero-badge"><i class="ti ti-snowflake" style="font-size:14px;"></i> Frozen &amp; refrigerated freight specialists</span>
+    <div class="hero-media"><img src="fleet/scania-pair-front.jpg" alt="Sandhu Transport Scania fleet" /></div>
+    <div class="hero-inner">
+      <div class="hero-status"><span class="status-dot"></span> Fleet live · Real-time GPS tracking 24/7</div>
       <h1>We Move More Than Goods —<br><span class="gold">We Move Promises</span></h1>
-      <p>Safe, reliable cold-chain and freight logistics across Southern Africa. A modern fleet of 90+ trucks and 10 specialized tankers, tracked in real time, 24/7.</p>
+      <p>Frozen &amp; refrigerated freight specialists operating across Southern Africa. A modern fleet of 90+ trucks and 10 specialized tankers, monitored in real time from collection to delivery.</p>
       <div class="hero-btns">
-        <a href="#contact" class="btn-gold"><i class="ti ti-file-text"></i> Request a quote</a>
-        <a href="#services" class="btn-ghost"><i class="ti ti-arrow-down"></i> Our services</a>
+        <a href="#contact" class="btn-primary"><i class="ti ti-file-text"></i> Request a quote</a>
+        <a href="#services" class="btn-secondary"><i class="ti ti-arrow-down"></i> Explore services</a>
       </div>
     </div>
-    <a href="#stats" class="hero-scroll"><i class="ti ti-chevron-down"></i></a>
   </header>
 
-  <!-- STATS -->
-  <div class="stats-bar" id="stats">
-    <div class="stat-item"><div class="stat-num">20+</div><div class="stat-label">Years of experience</div></div>
-    <div class="stat-item"><div class="stat-num">90+</div><div class="stat-label">Trucks in fleet</div></div>
-    <div class="stat-item"><div class="stat-num">10</div><div class="stat-label">Specialized tankers</div></div>
-    <div class="stat-item"><div class="stat-num">130+</div><div class="stat-label">Employees</div></div>
-    <div class="stat-item"><div class="stat-num">24/7</div><div class="stat-label">Real-time tracking</div></div>
+  <!-- TICKER -->
+  <div class="ticker">
+    <div class="ticker-inner">
+      <div class="ticker-cell"><div class="ticker-num">20<span class="u">+</span></div><div class="ticker-lbl">Years experience</div></div>
+      <div class="ticker-cell"><div class="ticker-num">90<span class="u">+</span></div><div class="ticker-lbl">Trucks in fleet</div></div>
+      <div class="ticker-cell"><div class="ticker-num">10</div><div class="ticker-lbl">Specialized tankers</div></div>
+      <div class="ticker-cell"><div class="ticker-num">130<span class="u">+</span></div><div class="ticker-lbl">Employees</div></div>
+      <div class="ticker-cell"><div class="ticker-num">24<span class="u">/7</span></div><div class="ticker-lbl">Live tracking</div></div>
+    </div>
   </div>
 
   <!-- SERVICES -->
-  <section class="section reveal" id="services">
-    <div class="section-label">What we do</div>
-    <div class="section-title">Our services</div>
-    <div class="gold-divider"></div>
-    <div class="section-sub">We specialise in frozen and refrigerated cargo — backed by a full range of freight, logistics and clearing services across Southern Africa.</div>
-    <div class="services-grid">
-      <div class="service-card feature">
-        <i class="ti ti-snowflake service-ic"></i>
-        <h3>Frozen &amp; refrigerated cargo<span class="badge">SPECIALITY</span></h3>
-        <p>Our core expertise — temperature-controlled reefer transport for frozen goods, fish, perishables and cold-chain cargo, handled with precision across the region.</p>
-      </div>
-      <div class="service-card"><i class="ti ti-package service-ic"></i><h3>Freight transport</h3><p>Safe, timely transport of goods across Zambia and neighbouring countries.</p></div>
-      <div class="service-card"><i class="ti ti-world service-ic"></i><h3>Cross-border logistics</h3><p>Customs handling and cross-border delivery to Namibia, DRC, Mozambique, Zimbabwe and South Africa.</p></div>
-      <div class="service-card"><i class="ti ti-droplet service-ic"></i><h3>Bulk liquid &amp; fuel</h3><p>Safe, compliant transportation of fuel and bulk liquids in our 10 purpose-built tanker trailers.</p></div>
-      <div class="service-card"><i class="ti ti-truck-delivery service-ic"></i><h3>Last-mile delivery</h3><p>Local distribution and final-mile delivery throughout Zambia.</p></div>
-      <div class="service-card"><i class="ti ti-clipboard-list service-ic"></i><h3>Clearing &amp; forwarding</h3><p>End-to-end clearing and forwarding for imports and exports across all SADC borders.</p></div>
+  <section class="section" id="services">
+    <div class="section-head reveal">
+      <span class="mono-label">Capabilities</span>
+      <h2 class="section-title">Our services</h2>
+      <p class="section-sub">We specialise in frozen and refrigerated cargo — backed by a full range of freight, logistics and clearing services across Southern Africa.</p>
+    </div>
+    <div class="grid-3 stagger reveal">
+      <div class="panel feature"><span class="tag">Speciality</span><div class="panel-ic"><i class="ti ti-snowflake"></i></div><h3>Frozen &amp; refrigerated cargo</h3><p>Our core expertise — temperature-controlled reefer transport for frozen goods, fish, perishables and cold-chain cargo, handled with precision across the region.</p></div>
+      <div class="panel"><div class="panel-ic"><i class="ti ti-package"></i></div><h3>Freight transport</h3><p>Safe, timely transport of goods across Zambia and neighbouring countries.</p></div>
+      <div class="panel"><div class="panel-ic"><i class="ti ti-world"></i></div><h3>Cross-border logistics</h3><p>Customs handling and cross-border delivery to Namibia, DRC, Mozambique, Zimbabwe and South Africa.</p></div>
+      <div class="panel"><div class="panel-ic"><i class="ti ti-droplet"></i></div><h3>Bulk liquid &amp; fuel</h3><p>Safe, compliant transportation of fuel and bulk liquids in our 10 purpose-built tanker trailers.</p></div>
+      <div class="panel"><div class="panel-ic"><i class="ti ti-truck-delivery"></i></div><h3>Last-mile delivery</h3><p>Local distribution and final-mile delivery throughout Zambia.</p></div>
+      <div class="panel"><div class="panel-ic"><i class="ti ti-clipboard-list"></i></div><h3>Clearing &amp; forwarding</h3><p>End-to-end clearing and forwarding for imports and exports across all SADC borders.</p></div>
     </div>
   </section>
 
-  <!-- FLEET FEATURE BLOCKS -->
-  <section class="section reveal" id="fleet">
-    <div class="section-label">Our fleet</div>
-    <div class="section-title">Built for the long haul</div>
-    <div class="gold-divider"></div>
-    <div class="section-sub">A diverse, well-maintained fleet of premium trucks engineered for the demanding routes of Southern Africa.</div>
-
-    <div class="feature-block">
-      <div class="fb-img" style="background-image:url('fleet/scania-pair-angle.jpg');"></div>
-      <div class="fb-text">
-        <div class="section-label">Reefer specialists</div>
-        <h3>Cold-chain, end to end</h3>
+  <!-- FLEET -->
+  <section class="section" id="fleet">
+    <div class="section-head reveal">
+      <span class="mono-label">The Fleet</span>
+      <h2 class="section-title">Built for the long haul</h2>
+      <p class="section-sub">A diverse, well-maintained fleet of premium trucks engineered for the demanding routes of Southern Africa.</p>
+    </div>
+    <div class="split reveal">
+      <div class="split-media"><img src="fleet/scania-pair-angle.jpg" alt="Sandhu Scania trucks with reefer container" loading="lazy"></div>
+      <div class="split-body">
+        <span class="mono-label">Cold-chain</span>
+        <h3>Temperature-controlled, end to end</h3>
         <p>Our refrigerated units keep frozen and perishable cargo at the right temperature from collection to final delivery — across borders and through every climate.</p>
-        <ul class="fb-list">
+        <ul class="flist">
           <li><i class="ti ti-circle-check"></i> Temperature-controlled reefer containers</li>
           <li><i class="ti ti-circle-check"></i> Ideal for fish, frozen foods &amp; perishables</li>
           <li><i class="ti ti-circle-check"></i> Monitored throughout the journey</li>
         </ul>
       </div>
     </div>
-
-    <div class="feature-block flip">
-      <div class="fb-img" style="background-image:url('fleet/volvo-reefer.jpg');"></div>
-      <div class="fb-text">
-        <div class="section-label">Premium trucks</div>
+    <div class="split flip reveal">
+      <div class="split-media"><img src="fleet/volvo-reefer.jpg" alt="Sandhu Volvo FMX with reefer container" loading="lazy"></div>
+      <div class="split-body">
+        <span class="mono-label">Premium trucks</span>
         <h3>Scania, Volvo &amp; Freightliner</h3>
         <p>We run a modern fleet of the world's most trusted heavy-haulage brands, maintained to the highest standards for maximum uptime and safety.</p>
-        <ul class="fb-list">
+        <ul class="flist">
           <li><i class="ti ti-circle-check"></i> 90+ trucks &amp; 10 specialized tankers</li>
           <li><i class="ti ti-circle-check"></i> Regularly serviced for reliability</li>
           <li><i class="ti ti-circle-check"></i> Experienced, professional drivers</li>
@@ -330,109 +357,104 @@
   </section>
 
   <!-- WHAT WE TRANSPORT -->
-  <section class="dark-section">
-    <div class="section reveal" style="padding-top:5rem;padding-bottom:5rem;">
-      <div class="section-label">What we carry</div>
-      <div class="section-title">Cargo we transport</div>
-      <div class="gold-divider"></div>
-      <div class="section-sub">From frozen goods to fuel, we handle a wide range of cargo across the region.</div>
-      <div class="transport-grid">
-        <div class="transport-item"><i class="ti ti-fish"></i><span>Fish &amp; seafood</span></div>
-        <div class="transport-item"><i class="ti ti-snowflake"></i><span>Frozen foods</span></div>
-        <div class="transport-item"><i class="ti ti-apple"></i><span>Perishables</span></div>
-        <div class="transport-item"><i class="ti ti-droplet"></i><span>Fuel &amp; liquids</span></div>
-        <div class="transport-item"><i class="ti ti-box"></i><span>Containers</span></div>
-        <div class="transport-item"><i class="ti ti-packages"></i><span>General cargo</span></div>
-      </div>
+  <section class="section" id="cargo">
+    <div class="section-head reveal">
+      <span class="mono-label">Payload</span>
+      <h2 class="section-title">Cargo we transport</h2>
+      <p class="section-sub">From frozen goods to fuel, we handle a wide range of cargo across the region.</p>
+    </div>
+    <div class="chips stagger reveal">
+      <div class="chip"><i class="ti ti-fish"></i><span>Fish &amp; seafood</span></div>
+      <div class="chip"><i class="ti ti-snowflake"></i><span>Frozen foods</span></div>
+      <div class="chip"><i class="ti ti-apple"></i><span>Perishables</span></div>
+      <div class="chip"><i class="ti ti-droplet"></i><span>Fuel &amp; liquids</span></div>
+      <div class="chip"><i class="ti ti-box"></i><span>Containers</span></div>
+      <div class="chip"><i class="ti ti-packages"></i><span>General cargo</span></div>
     </div>
   </section>
 
   <!-- TRACKING -->
-  <section class="section reveal" id="tracking">
-    <div class="track-wrap">
-      <div>
-        <div class="section-label">Always connected</div>
-        <div class="section-title">Real-time GPS tracking, 24/7</div>
-        <div class="gold-divider"></div>
-        <p style="font-size:15.5px;color:#5a6577;margin-bottom:1.2rem;">Every vehicle in our fleet is tracked in real time, around the clock. You always know where your cargo is — giving you full visibility, security and peace of mind from collection to delivery.</p>
-        <ul class="fb-list">
+  <section class="section" id="tracking">
+    <div class="track reveal">
+      <div class="track-panel">
+        <span class="mono-label">Live Operations</span>
+        <h2 class="section-title" style="font-size:32px;margin:1rem 0;">Real-time GPS tracking, 24/7</h2>
+        <p style="font-size:15px;color:var(--text-dim);margin-bottom:1.3rem;">Every vehicle in our fleet is tracked in real time, around the clock. You always know where your cargo is — giving you full visibility, security and peace of mind from collection to delivery.</p>
+        <ul class="flist">
           <li><i class="ti ti-circle-check"></i> Live vehicle location, day and night</li>
           <li><i class="ti ti-circle-check"></i> Continuous monitoring of every shipment</li>
           <li><i class="ti ti-circle-check"></i> Greater security for high-value &amp; cold-chain cargo</li>
         </ul>
       </div>
-      <div class="track-visual">
-        <div class="track-pulse"></div>
-        <div class="track-stat"><div class="big">24/7</div><div class="lbl">Live fleet monitoring</div></div>
+      <div class="track-viz">
+        <div class="radar"></div>
+        <div class="radar-sweep"></div>
+        <div class="radar-ping"></div>
+        <div class="radar-dot"></div>
+        <div class="track-badge"><div class="big">24/7</div><div class="lbl">Live fleet monitoring</div></div>
       </div>
     </div>
   </section>
 
   <!-- WHY US -->
-  <section class="dark-section">
-    <div class="section reveal" style="padding-top:5rem;padding-bottom:5rem;">
-      <div class="section-label">Why choose us</div>
-      <div class="section-title">Built on trust &amp; reliability</div>
-      <div class="gold-divider"></div>
-      <div class="section-sub">Our reputation is built on consistent, dependable service and the hardworking people behind every delivery.</div>
-      <div class="why-grid">
-        <div class="why-item"><div class="why-ic"><i class="ti ti-shield-check"></i></div><div><h4>Integrity in every decision</h4><p>Honesty, transparency and doing the right thing — every time.</p></div></div>
-        <div class="why-item"><div class="why-ic"><i class="ti ti-target"></i></div><div><h4>Precision in every load</h4><p>Our fleet is managed with care, ensuring every delivery is handled correctly.</p></div></div>
-        <div class="why-item"><div class="why-ic"><i class="ti ti-heart-handshake"></i></div><div><h4>Care in every step</h4><p>From collection to final delivery, our 130+ strong team is committed to your success.</p></div></div>
-        <div class="why-item"><div class="why-ic"><i class="ti ti-users"></i></div><div><h4>Hardworking people</h4><p>Genuinely dedicated drivers and staff who go the extra mile, every journey.</p></div></div>
-      </div>
+  <section class="section" id="why">
+    <div class="section-head reveal">
+      <span class="mono-label">Why Sandhu</span>
+      <h2 class="section-title">Built on trust &amp; reliability</h2>
+      <p class="section-sub">Our reputation is built on consistent, dependable service and the hardworking people behind every delivery.</p>
+    </div>
+    <div class="grid-2 stagger reveal">
+      <div class="panel"><div class="panel-ic"><i class="ti ti-shield-check"></i></div><h3>Integrity in every decision</h3><p>Honesty, transparency and doing the right thing — every time.</p></div>
+      <div class="panel"><div class="panel-ic"><i class="ti ti-target"></i></div><h3>Precision in every load</h3><p>Our fleet is managed with care, ensuring every delivery is handled correctly.</p></div>
+      <div class="panel"><div class="panel-ic"><i class="ti ti-heart-handshake"></i></div><h3>Care in every step</h3><p>From collection to final delivery, our 130+ strong team is committed to your success.</p></div>
+      <div class="panel"><div class="panel-ic"><i class="ti ti-users"></i></div><h3>Hardworking people</h3><p>Genuinely dedicated drivers and staff who go the extra mile, every journey.</p></div>
     </div>
   </section>
 
   <!-- ROUTES -->
-  <section class="section reveal" id="routes">
-    <div class="section-label">Where we go</div>
-    <div class="section-title">Routes connecting Zambia</div>
-    <div class="gold-divider"></div>
-    <div class="section-sub">Operating key freight corridors across Southern Africa — from the Copperbelt to the Atlantic and Indian Ocean ports.</div>
-    <div class="routes-grid">
-      <div class="route-card"><div class="rc-head"><i class="ti ti-map-pin"></i><span>Walvis Bay, Namibia</span></div><p>Atlantic coast port — a critical export hub for landlocked Southern Africa. Long-haul westbound corridor.</p></div>
-      <div class="route-card"><div class="rc-head"><i class="ti ti-map-pin"></i><span>Windhoek, Namibia</span></div><p>Capital city freight and distribution, connecting Zambia through Botswana into the Namibian heartland.</p></div>
-      <div class="route-card"><div class="rc-head"><i class="ti ti-map-pin"></i><span>Beira, Mozambique</span></div><p>Indian Ocean port — a vital corridor for imports and exports through eastern Mozambique via Zimbabwe.</p></div>
-      <div class="route-card"><div class="rc-head"><i class="ti ti-map-pin"></i><span>Lubumbashi, DRC</span></div><p>Northbound corridor into the DRC — serving the mineral-rich Katanga region from the Zambian Copperbelt.</p></div>
+  <section class="section" id="routes">
+    <div class="section-head reveal">
+      <span class="mono-label">Network</span>
+      <h2 class="section-title">Routes connecting Zambia</h2>
+      <p class="section-sub">Operating key freight corridors across Southern Africa — from the Copperbelt to the Atlantic and Indian Ocean ports.</p>
+    </div>
+    <div class="grid-3 stagger reveal">
+      <div class="route"><div class="code">RT-01 · WESTBOUND</div><h4>Walvis Bay, Namibia</h4><p>Atlantic coast port — a critical export hub for landlocked Southern Africa. Long-haul westbound corridor.</p></div>
+      <div class="route"><div class="code">RT-02 · WESTBOUND</div><h4>Windhoek, Namibia</h4><p>Capital city freight and distribution, connecting Zambia through Botswana into the Namibian heartland.</p></div>
+      <div class="route"><div class="code">RT-03 · EASTBOUND</div><h4>Beira, Mozambique</h4><p>Indian Ocean port — a vital corridor for imports and exports through eastern Mozambique via Zimbabwe.</p></div>
+      <div class="route"><div class="code">RT-04 · NORTHBOUND</div><h4>Lubumbashi, DRC</h4><p>Northbound corridor into the DRC — serving the mineral-rich Katanga region from the Zambian Copperbelt.</p></div>
     </div>
   </section>
 
   <!-- GALLERY -->
-  <section class="section reveal" id="gallery">
-    <div class="section-label">Our fleet in action</div>
-    <div class="section-title">On the road across Southern Africa</div>
-    <div class="gold-divider"></div>
-    <div class="section-sub">A look at our branded trucks and refrigerated trailers operating throughout the region.</div>
-    <div class="gallery-grid">
-      <div class="gallery-item"><img src="fleet/scania-pair-front.jpg" alt="Two Sandhu Transport Scania trucks" loading="lazy"></div>
-      <div class="gallery-item"><img src="fleet/fleet-lineup.jpg" alt="Sandhu Transport fleet lineup with containers" loading="lazy"></div>
-      <div class="gallery-item"><img src="fleet/depot-wide.jpg" alt="Sandhu Transport depot in Ndola" loading="lazy"></div>
-      <div class="gallery-item"><img src="fleet/freightliner-gold.jpg" alt="Sandhu Transport gold Freightliner" loading="lazy"></div>
-      <div class="gallery-item"><img src="fleet/volvo-reefer.jpg" alt="Sandhu Transport Volvo with reefer container" loading="lazy"></div>
-      <div class="gallery-item"><img src="fleet/scania-pair-angle.jpg" alt="Sandhu Transport Scania trucks at the depot" loading="lazy"></div>
+  <section class="section" id="gallery">
+    <div class="section-head reveal">
+      <span class="mono-label">On The Road</span>
+      <h2 class="section-title">Our fleet in action</h2>
+      <p class="section-sub">A look at our branded trucks and refrigerated trailers operating throughout the region.</p>
+    </div>
+    <div class="gallery stagger reveal">
+      <div class="shot"><img src="fleet/scania-pair-front.jpg" alt="Two Sandhu Scania trucks" loading="lazy"></div>
+      <div class="shot"><img src="fleet/fleet-lineup.jpg" alt="Sandhu fleet lineup with containers" loading="lazy"></div>
+      <div class="shot"><img src="fleet/depot-wide.jpg" alt="Sandhu depot in Ndola" loading="lazy"></div>
+      <div class="shot"><img src="fleet/freightliner-gold.jpg" alt="Sandhu gold Freightliner" loading="lazy"></div>
+      <div class="shot"><img src="fleet/volvo-reefer.jpg" alt="Sandhu Volvo with reefer container" loading="lazy"></div>
+      <div class="shot"><img src="fleet/scania-pair-angle.jpg" alt="Sandhu Scania trucks at depot" loading="lazy"></div>
     </div>
   </section>
 
-  <!-- MISSION & VISION -->
-  <section class="section reveal">
-    <div class="section-label">Who we are</div>
-    <div class="section-title">About Sandhu Transport</div>
-    <div class="gold-divider"></div>
-    <p style="font-size:15.5px;color:#5a6577;max-width:760px;margin-bottom:2.2rem;">Sandhu Transport is a freight and logistics company that plans, implements and operates supply chain solutions on a national, regional and global scale. We are the driving force that keeps goods moving, businesses running, and commitments delivered on time — every time. With a fleet of 90+ trucks and a team of over 130 people, we guarantee seamless operations across borders.</p>
-    <div class="mv-grid">
-      <div class="mv-card mission"><div class="mv-lbl">Our Mission</div><p>To provide safe, efficient, and cost-effective transport solutions through modern fleet management, skilled personnel, and a customer-first approach — ensuring every delivery is on time, every time.</p></div>
-      <div class="mv-card vision"><div class="mv-lbl">Our Vision</div><p>To be the most trusted and preferred transport and logistics partner in the region, recognised for our reliability, safety, and commitment to delivering excellence in every journey.</p></div>
+  <!-- ABOUT / MV -->
+  <section class="section" id="about">
+    <div class="section-head reveal">
+      <span class="mono-label">Who We Are</span>
+      <h2 class="section-title">About Sandhu Transport</h2>
+      <p class="section-sub">Sandhu Transport is a freight and logistics company that plans, implements and operates supply chain solutions on a national, regional and global scale. With a fleet of 90+ trucks and a team of over 130 people, we keep goods moving and commitments delivered — every time.</p>
     </div>
-  </section>
-
-  <!-- TRUST / ACCREDITATIONS -->
-  <section class="section reveal" style="padding-top:0;">
-    <div style="text-align:center;margin-bottom:2rem;">
-      <div class="section-label" style="text-align:center;">Licensed &amp; accredited</div>
-      <div class="section-title" style="font-size:24px;">Fully compliant &amp; certified</div>
+    <div class="mv reveal">
+      <div class="mv-card mission"><span class="mono-label">Our Mission</span><p>To provide safe, efficient, and cost-effective transport solutions through modern fleet management, skilled personnel, and a customer-first approach — ensuring every delivery is on time, every time.</p></div>
+      <div class="mv-card vision"><span class="mono-label">Our Vision</span><p>To be the most trusted and preferred transport and logistics partner in the region, recognised for our reliability, safety, and commitment to delivering excellence in every journey.</p></div>
     </div>
-    <div class="trust-row">
+    <div style="margin-top:2rem;" class="trust reveal">
       <div class="trust-item"><i class="ti ti-license"></i><span>Road Transport Operator Licence</span></div>
       <div class="trust-item"><i class="ti ti-world-check"></i><span>SADC Cross-Border Permits</span></div>
       <div class="trust-item"><i class="ti ti-certificate"></i><span>Fully Insured &amp; Bonded</span></div>
@@ -441,64 +463,63 @@
   </section>
 
   <!-- AI CHAT -->
-  <section class="ai-section">
-    <div class="section reveal" id="ai-section" style="padding-top:5rem;padding-bottom:5rem;">
-      <div class="ai-wrap">
-        <div class="section-label" style="text-align:center;">Ask us anything</div>
-        <h2 class="section-title" style="color:#fff;">Ask Sandhu AI</h2>
-        <div class="gold-divider" style="margin-left:auto;margin-right:auto;"></div>
-        <p style="font-size:15.5px;color:rgba(255,255,255,.7);max-width:520px;margin:0 auto;">Have a question about our services, routes or fleet? Ask our assistant and get an instant answer.</p>
-        <div class="ai-inputrow">
-          <input type="text" id="questionInput" placeholder="e.g. Do you transport frozen goods to Namibia?" onkeydown="if(event.key==='Enter')askAI()" />
-          <button onclick="askAI()">Ask</button>
-        </div>
-        <div id="chatBox"></div>
+  <section class="section" id="ai-chat">
+    <div class="section-head reveal" style="text-align:center;max-width:640px;margin-left:auto;margin-right:auto;">
+      <span class="mono-label" style="justify-content:center;">Ask Sandhu AI</span>
+      <h2 class="section-title">Instant answers, anytime</h2>
+      <p class="section-sub" style="margin-left:auto;margin-right:auto;">Have a question about our services, routes or fleet? Ask our assistant and get an instant answer.</p>
+    </div>
+    <div class="ai-panel reveal">
+      <div class="ai-inputrow">
+        <input type="text" id="questionInput" placeholder="e.g. Do you transport frozen goods to Namibia?" onkeydown="if(event.key==='Enter')askAI()" />
+        <button onclick="askAI()">Ask</button>
       </div>
+      <div id="chatBox"></div>
     </div>
   </section>
 
   <!-- CONTACT -->
-  <section class="contact-section">
-    <div class="section reveal" id="contact">
-      <div class="section-label">Get in touch</div>
-      <div class="section-title">Ready to ship?</div>
-      <div class="gold-divider"></div>
-      <div class="contact-grid" style="margin-top:1.5rem;">
-        <div class="contact-info">
-          <p>Whether you need a quick quote or want to discuss a long-term logistics partnership, our team is ready to help. We operate across Zambia, Namibia, DRC, Mozambique and South Africa.</p>
-          <div class="contact-block">
-            <div class="cb-label">Director</div>
-            <div class="contact-detail"><i class="ti ti-user"></i><span class="person-name">Harminder Singh</span></div>
-            <div class="contact-detail"><i class="ti ti-mail"></i><a href="mailto:onkarzm@gmail.com">onkarzm@gmail.com</a></div>
-            <div class="contact-detail"><i class="ti ti-phone"></i><a href="tel:+260977469435">+260 977 469 435</a></div>
-            <div class="contact-detail"><i class="ti ti-clock"></i><span>Office Hours: Mon–Fri, 8:00 AM – 5:00 PM</span></div>
-          </div>
-          <div class="contact-block">
-            <div class="cb-label">Head of Operations</div>
-            <div class="contact-detail"><i class="ti ti-user"></i><span class="person-name">Moses Banda</span></div>
-            <div class="contact-detail"><i class="ti ti-mail"></i><a href="mailto:operations@sandhutransportzam.com">operations@sandhutransportzam.com</a></div>
-            <div class="contact-detail"><i class="ti ti-phone"></i><a href="tel:+260979370189">+260 979 370 189</a></div>
-            <div style="height:12px;"></div>
-            <div class="contact-detail"><i class="ti ti-user"></i><span class="person-name">Richard Silitong</span></div>
-            <div class="contact-detail"><i class="ti ti-mail"></i><a href="mailto:richardaccounts@sandhutransportzam.com">richardaccounts@sandhutransportzam.com</a></div>
-            <div class="contact-detail"><i class="ti ti-phone"></i><a href="tel:+260763954939">+260 763 954 939</a></div>
-          </div>
-          <div class="contact-block">
-            <div class="cb-label">Our Location</div>
-            <div class="contact-detail"><i class="ti ti-map-pin"></i><span>Plot 144A Makoli Avenue, Ndola, Zambia</span></div>
-            <div class="map-embed">
-              <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3887.8362452572237!2d28.641364375076595!3d-12.982323487334044!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x196cb4ef3549e6e1%3A0xc41f3e673066e5bf!2sSandhu%20transport%20limited!5e1!3m2!1sen!2szm!4v1781535846395!5m2!1sen!2szm" width="100%" height="230" style="border:0;display:block;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-            </div>
+  <section class="section" id="contact">
+    <div class="section-head reveal">
+      <span class="mono-label">Get In Touch</span>
+      <h2 class="section-title">Ready to ship?</h2>
+      <p class="section-sub">Whether you need a quick quote or want to discuss a long-term logistics partnership, our team is ready to help. We operate across Zambia, Namibia, DRC, Mozambique and South Africa.</p>
+    </div>
+    <div class="contact reveal">
+      <div class="contact-panel">
+        <div class="cblock">
+          <div class="clabel">Director</div>
+          <div class="cdetail"><i class="ti ti-user"></i><span class="cname">Harminder Singh</span></div>
+          <div class="cdetail"><i class="ti ti-mail"></i><a href="mailto:onkarzm@gmail.com">onkarzm@gmail.com</a></div>
+          <div class="cdetail"><i class="ti ti-phone"></i><a href="tel:+260977469435">+260 977 469 435</a></div>
+          <div class="cdetail"><i class="ti ti-clock"></i><span>Office Hours: Mon–Fri, 8:00 AM – 5:00 PM</span></div>
+        </div>
+        <div class="cblock">
+          <div class="clabel">Head of Operations</div>
+          <div class="cdetail"><i class="ti ti-user"></i><span class="cname">Moses Banda</span></div>
+          <div class="cdetail"><i class="ti ti-mail"></i><a href="mailto:operations@sandhutransportzam.com">operations@sandhutransportzam.com</a></div>
+          <div class="cdetail"><i class="ti ti-phone"></i><a href="tel:+260979370189">+260 979 370 189</a></div>
+          <div style="height:10px;"></div>
+          <div class="cdetail"><i class="ti ti-user"></i><span class="cname">Richard Silitong</span></div>
+          <div class="cdetail"><i class="ti ti-mail"></i><a href="mailto:richardaccounts@sandhutransportzam.com">richardaccounts@sandhutransportzam.com</a></div>
+          <div class="cdetail"><i class="ti ti-phone"></i><a href="tel:+260763954939">+260 763 954 939</a></div>
+        </div>
+        <div class="cblock">
+          <div class="clabel">Our Location</div>
+          <div class="cdetail"><i class="ti ti-map-pin"></i><span>Plot 144A Makoli Avenue, Ndola, Zambia</span></div>
+          <div class="map-embed">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3887.8362452572237!2d28.641364375076595!3d-12.982323487334044!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x196cb4ef3549e6e1%3A0xc41f3e673066e5bf!2sSandhu%20transport%20limited!5e1!3m2!1sen!2szm!4v1781535846395!5m2!1sen!2szm" width="100%" height="230" style="border:0;display:block;filter:grayscale(.3) invert(.9) hue-rotate(180deg);" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
           </div>
         </div>
-        <div class="contact-form">
-          <h3 style="font-size:20px;font-weight:700;color:var(--navy);margin-bottom:.6rem;">Get in touch directly</h3>
-          <p style="font-size:14.5px;color:#5a6577;margin-bottom:1.6rem;">Reach out by phone or email and our team will respond promptly with a quote tailored to your shipment.</p>
-          <a href="tel:+260977469435" class="form-submit" style="text-decoration:none;margin-bottom:12px;"><i class="ti ti-phone"></i> Call us now</a>
-          <a href="mailto:onkarzm@gmail.com?subject=Freight%20Enquiry%20-%20Sandhu%20Transport" class="form-submit" style="text-decoration:none;background:var(--gold);color:var(--navy);margin-bottom:12px;"><i class="ti ti-mail"></i> Email an enquiry</a>
-          <a href="https://wa.me/260977469435?text=Hello%20Sandhu%20Transport%2C%20I%27d%20like%20a%20quote" target="_blank" class="form-submit" style="text-decoration:none;background:#25D366;color:#fff;"><i class="ti ti-brand-whatsapp"></i> Chat on WhatsApp</a>
-          <p style="font-size:12.5px;color:#8a94a4;margin-top:1.4rem;text-align:center;">We respect your privacy — this site does not collect or store personal data.</p>
-        </div>
+      </div>
+      <div class="contact-panel">
+        <div class="clabel" style="font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-light);margin-bottom:.5rem;">Contact directly</div>
+        <h3 style="font-size:22px;font-weight:700;margin-bottom:.5rem;">Get in touch</h3>
+        <p style="font-size:14px;color:var(--text-dim);margin-bottom:1.6rem;">Reach out by phone, email or WhatsApp and our team will respond promptly with a quote tailored to your shipment.</p>
+        <a href="tel:+260977469435" class="cta-btn cta-call"><i class="ti ti-phone"></i> Call us now</a>
+        <a href="mailto:onkarzm@gmail.com?subject=Freight%20Enquiry%20-%20Sandhu%20Transport" class="cta-btn cta-email"><i class="ti ti-mail"></i> Email an enquiry</a>
+        <a href="https://wa.me/260977469435?text=Hello%20Sandhu%20Transport%2C%20I%27d%20like%20a%20quote" target="_blank" class="cta-btn cta-wa"><i class="ti ti-brand-whatsapp"></i> Chat on WhatsApp</a>
+        <p class="privacy-note">We respect your privacy — this site does not collect or store personal data.</p>
       </div>
     </div>
   </section>
@@ -507,7 +528,7 @@
   <footer>
     <div class="footer-main">
       <div>
-        <div class="footer-brand-row">
+        <div class="footer-brand">
           <span class="nav-logo-icon"><i class="ti ti-truck"></i></span>
           <span class="footer-brand-name">Sandhu Transport Zambia</span>
         </div>
@@ -528,46 +549,41 @@
         <a href="https://maps.app.goo.gl/BskZraWQc5p3gqGMA" target="_blank">Plot 144A Makoli Ave, Ndola</a>
       </div>
     </div>
-    <div class="footer-bottom">© 2026 Sandhu Transport Zambia. All rights reserved. · Logistics &amp; Freight · Southern Africa<br>
-      <a href="privacy.html" style="color:rgba(255,255,255,.6);text-decoration:none;">Privacy Policy</a> &nbsp;·&nbsp; <a href="terms.html" style="color:rgba(255,255,255,.6);text-decoration:none;">Terms &amp; Conditions</a>
-    </div>
+    <div class="footer-bottom">© 2026 Sandhu Transport Zambia. All rights reserved. · <a href="privacy.html">Privacy Policy</a> · <a href="terms.html">Terms &amp; Conditions</a></div>
   </footer>
 
+  </div><!-- /content -->
+
   <script>
-    // Sticky nav background on scroll
     const nav = document.getElementById('nav');
     window.addEventListener('scroll', () => {
-      if (window.scrollY > 40) nav.classList.add('scrolled');
-      else nav.classList.remove('scrolled');
+      if (window.scrollY > 40) nav.classList.add('scrolled'); else nav.classList.remove('scrolled');
     });
-    // Scroll reveal
     const obs = new IntersectionObserver((entries) => {
-      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+      entries.forEach(e => { if (e.isIntersecting){ e.target.classList.add('visible'); obs.unobserve(e.target);} });
     }, { threshold: 0.12 });
     document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 
     // ===== Sandhu AI chat =====
     // NOTE: 127.0.0.1 only works while your Python backend runs on THIS computer.
-    // When you deploy the backend, change the URL below to your public https URL
-    // e.g. "https://your-backend.onrender.com/api/ask-ai"
+    // When you deploy the backend, change the URL below to your public https URL.
     async function askAI() {
       const question = document.getElementById("questionInput").value;
-      const response = await fetch("https://sandhutptltd.onrender.com/api/ask-ai", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          question: question
-        })
-      });
-      const data = await response.json();
-      document.getElementById("chatBox").innerHTML = `
-        <p><strong>You:</strong> ${data.question}</p>
-        <p><strong>AI:</strong> ${data.answer}</p>
-      `;
+      if(!question.trim()) return;
+      const box = document.getElementById("chatBox");
+      box.innerHTML = `<p class="q"><strong>You</strong>${question}</p><p class="a"><strong>Sandhu AI</strong>Thinking...</p>`;
+      try {
+        const response = await fetch("http://127.0.0.1:8000/api/ask-ai", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ question: question })
+        });
+        const data = await response.json();
+        box.innerHTML = `<p class="q"><strong>You</strong>${data.question || question}</p><p class="a"><strong>Sandhu AI</strong>${data.answer || 'Sorry, I could not get an answer.'}</p>`;
+      } catch (err) {
+        box.innerHTML = `<p class="q"><strong>You</strong>${question}</p><p class="a"><strong>Sandhu AI</strong>Sorry, something went wrong. Please contact us directly.</p>`;
+      }
     }
   </script>
-
 </body>
 </html>
